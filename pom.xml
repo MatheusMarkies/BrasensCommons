@@ -4,7 +4,7 @@
 
   <groupId>com.brasens</groupId>
   <artifactId>BrasensCommons</artifactId>
-  <version>1.0</version>
+  <version>1.2</version>
   <packaging>jar</packaging>
 
   <name>BrasensCommons</name>
@@ -23,13 +23,6 @@
       <artifactId>junit</artifactId>
       <version>3.8.1</version>
       <scope>test</scope>
-    </dependency>
-
-    <!-- https://mvnrepository.com/artifact/org.springframework/spring-web -->
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-web</artifactId>
-      <version>6.1.8</version>
     </dependency>
 
     <dependency>
