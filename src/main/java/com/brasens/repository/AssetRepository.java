@@ -1,0 +1,14 @@
+package com.brasens.repository;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+import com.brasens.dtos.Asset;
+import org.springframework.data.jpa.repository.JpaRepository;
+public interface AssetRepository extends JpaRepository<Asset, UUID> {
+
+    List<Asset> findByName(String name);
+    Optional<Asset> findByKey(String key);
+
+}
