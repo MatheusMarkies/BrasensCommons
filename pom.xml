@@ -4,7 +4,7 @@
 
   <groupId>com.brasens</groupId>
   <artifactId>BrasensCommons</artifactId>
-  <version>1.4</version>
+  <version>1.5</version>
   <packaging>jar</packaging>
 
   <name>BrasensCommons</name>
@@ -51,6 +51,13 @@
           <artifactId>spring-data-jpa</artifactId>
           <version>2.6.1</version>
       </dependency>
+    <!--
+  https://mvnrepository.com/artifact/com.github.wendykierp/JTransforms -->
+    <dependency>
+      <groupId>com.github.wendykierp</groupId>
+      <artifactId>JTransforms</artifactId>
+      <version>3.0</version>
+    </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
