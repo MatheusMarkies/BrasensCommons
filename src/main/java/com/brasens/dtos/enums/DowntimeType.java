@@ -9,6 +9,10 @@ public enum DowntimeType {
         this.legend = legend;
     }
 
+    public String getLegend() {
+        return legend;
+    }
+
     public static DowntimeType getDowntimeType(String period) {
         switch (period) {
             case "Manual":

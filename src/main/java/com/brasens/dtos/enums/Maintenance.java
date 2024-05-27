@@ -12,6 +12,10 @@ public enum Maintenance {
         this.legend = legend;
     }
 
+    public String getLegend() {
+        return legend;
+    }
+
     public static Maintenance getMaintenance(String period) {
         switch (period) {
             case "Preditivo":

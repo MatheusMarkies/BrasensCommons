@@ -9,6 +9,10 @@ public enum AssetState {
 		this.legend = legend;
 	}
 
+	public String getLegend() {
+		return legend;
+	}
+
 	public static AssetState getAssetState(String period) {
 		switch (period) {
 			case "Funcionando":

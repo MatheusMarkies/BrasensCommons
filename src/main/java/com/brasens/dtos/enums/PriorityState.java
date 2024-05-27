@@ -11,6 +11,10 @@ public enum PriorityState {
         this.legend = legend;
     }
 
+    public String getLegend() {
+        return legend;
+    }
+
     public static PriorityState getPriorityState(String period) {
         switch (period) {
             case "Urgente":

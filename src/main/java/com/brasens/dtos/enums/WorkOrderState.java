@@ -12,6 +12,10 @@ public enum WorkOrderState {
         this.legend = legend;
     }
 
+    public String getLegend() {
+        return legend;
+    }
+
     public static WorkOrderState getWorkOrderState(String period) {
         switch (period) {
             case "Completo":

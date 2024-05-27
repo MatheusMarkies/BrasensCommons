@@ -9,6 +9,10 @@ public enum SensorState {
         this.legend = legend;
     }
 
+    public String getLegend() {
+        return legend;
+    }
+
     public static SensorState getSensorState(String period) {
         switch (period) {
             case "Ativo":

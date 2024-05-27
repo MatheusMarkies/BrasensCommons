@@ -15,6 +15,10 @@ public enum DataPeriod {
 		this.legend = legend;
 	}
 
+	public String getLegend() {
+		return legend;
+	}
+
 	public static DataPeriod getDataPeriod(String period) {
 		switch (period) {
 			case "Minuto":

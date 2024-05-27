@@ -11,6 +11,10 @@ public enum AlertLevel {
         this.legend = legend;
     }
 
+    public String getLegend() {
+        return legend;
+    }
+
     public static AlertLevel getAlertLevel(String level) {
         switch (level) {
             case "Normal":

@@ -11,6 +11,10 @@ public enum AlertTarget {
         this.legend = legend;
     }
 
+    public String getLegend() {
+        return legend;
+    }
+
     public static AlertTarget getAlertTarget(String target) {
         switch (target) {
             case "Rms":
