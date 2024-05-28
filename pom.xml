@@ -4,7 +4,7 @@
 
   <groupId>com.brasens</groupId>
   <artifactId>BrasensCommons</artifactId>
-  <version>1.8.5</version>
+  <version>1.8.6</version>
   <packaging>jar</packaging>
 
   <name>BrasensCommons</name>
@@ -63,10 +63,12 @@
       <artifactId>jackson-databind</artifactId>
       <version>2.14.2</version>
     </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web -->
     <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-web</artifactId>
-      <version>6.1.8</version>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+      <version>3.2.3</version>
     </dependency>
 
   </dependencies>
