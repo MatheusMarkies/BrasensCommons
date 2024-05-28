@@ -4,7 +4,7 @@
 
   <groupId>com.brasens</groupId>
   <artifactId>BrasensCommons</artifactId>
-  <version>1.7</version>
+  <version>1.8</version>
   <packaging>jar</packaging>
 
   <name>BrasensCommons</name>
@@ -62,6 +62,11 @@
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
       <version>2.14.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <version>6.1.8</version>
     </dependency>
 
   </dependencies>
