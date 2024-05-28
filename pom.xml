@@ -4,7 +4,7 @@
 
   <groupId>com.brasens</groupId>
   <artifactId>BrasensCommons</artifactId>
-  <version>1.8.6</version>
+  <version>1.8.7</version>
   <packaging>jar</packaging>
 
   <name>BrasensCommons</name>
@@ -62,13 +62,6 @@
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
       <version>2.14.2</version>
-    </dependency>
-
-    <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-      <version>3.2.3</version>
     </dependency>
 
   </dependencies>
