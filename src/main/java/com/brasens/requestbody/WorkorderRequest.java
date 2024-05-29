@@ -74,4 +74,68 @@ public class WorkorderRequest {
 	public Workorder requestToWorkorder() {
         return new Workorder(name, owner, asset, createdDate, conclusionDate, state, maintenance, priority);
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getOwner() {
+		return owner;
+	}
+
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
+
+	public String getAsset() {
+		return asset;
+	}
+
+	public void setAsset(String asset) {
+		this.asset = asset;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Date getConclusionDate() {
+		return conclusionDate;
+	}
+
+	public void setConclusionDate(Date conclusionDate) {
+		this.conclusionDate = conclusionDate;
+	}
+
+	public WorkOrderState getState() {
+		return state;
+	}
+
+	public void setState(WorkOrderState state) {
+		this.state = state;
+	}
+
+	public Maintenance getMaintenance() {
+		return maintenance;
+	}
+
+	public void setMaintenance(Maintenance maintenance) {
+		this.maintenance = maintenance;
+	}
+
+	public PriorityState getPriority() {
+		return priority;
+	}
+
+	public void setPriority(PriorityState priority) {
+		this.priority = priority;
+	}
 }
