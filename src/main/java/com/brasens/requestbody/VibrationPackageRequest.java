@@ -38,4 +38,55 @@ public class VibrationPackageRequest implements Serializable {
 		
 		return vibrationPackage;
 	}
+
+	public VibrationPackageRequest() {
+	}
+
+	public VibrationPackageRequest(String type, String key, List<Double> dataPackage, int start, int end) {
+		this.type = type;
+		this.key = key;
+		this.dataPackage = dataPackage;
+		this.start = start;
+		this.end = end;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+	public List<Double> getDataPackage() {
+		return dataPackage;
+	}
+
+	public void setDataPackage(List<Double> dataPackage) {
+		this.dataPackage = dataPackage;
+	}
+
+	public int getStart() {
+		return start;
+	}
+
+	public void setStart(int start) {
+		this.start = start;
+	}
+
+	public int getEnd() {
+		return end;
+	}
+
+	public void setEnd(int end) {
+		this.end = end;
+	}
 }

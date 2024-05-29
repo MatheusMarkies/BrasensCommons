@@ -25,4 +25,23 @@ public class RoleRequest implements Serializable {
         privileges.add("");
         return new RoleRequest("Colaborador", privileges);
     }
+
+    public RoleRequest() {
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public List<String> getPrivileges() {
+        return privileges;
+    }
+
+    public void setPrivileges(List<String> privileges) {
+        this.privileges = privileges;
+    }
 }

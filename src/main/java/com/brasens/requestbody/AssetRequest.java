@@ -38,4 +38,55 @@ public class AssetRequest {
 			asset.setCreated_at(ZonedDateTime.now());
 			return asset;
 		}
+
+	public AssetRequest() {
+	}
+
+	public AssetRequest(String name, String key, String manufacturer, String asset_location, Date productionDate) {
+		this.name = name;
+		this.key = key;
+		this.manufacturer = manufacturer;
+		this.asset_location = asset_location;
+		this.productionDate = productionDate;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+	public String getManufacturer() {
+		return manufacturer;
+	}
+
+	public void setManufacturer(String manufacturer) {
+		this.manufacturer = manufacturer;
+	}
+
+	public String getAsset_location() {
+		return asset_location;
+	}
+
+	public void setAsset_location(String asset_location) {
+		this.asset_location = asset_location;
+	}
+
+	public Date getProductionDate() {
+		return productionDate;
+	}
+
+	public void setProductionDate(Date productionDate) {
+		this.productionDate = productionDate;
+	}
 }

@@ -31,4 +31,46 @@ public class DataRequest implements Serializable{
 	public String toString() {
 		return "DataRequest [type=" + type + ", key=" + key + ", rms=" + rms + ", temperature=" + temperature + "]";
 	}
+
+	public DataRequest() {
+	}
+
+	public DataRequest(String type, String key, List<Double> rms, double temperature) {
+		this.type = type;
+		this.key = key;
+		this.rms = rms;
+		this.temperature = temperature;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+	public List<Double> getRms() {
+		return rms;
+	}
+
+	public void setRms(List<Double> rms) {
+		this.rms = rms;
+	}
+
+	public double getTemperature() {
+		return temperature;
+	}
+
+	public void setTemperature(double temperature) {
+		this.temperature = temperature;
+	}
 }
