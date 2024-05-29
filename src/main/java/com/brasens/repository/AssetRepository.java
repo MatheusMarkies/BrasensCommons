@@ -6,6 +6,9 @@ import java.util.UUID;
 
 import com.brasens.dtos.Asset;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
 public interface AssetRepository extends JpaRepository<Asset, UUID> {
 
     List<Asset> findByName(String name);
