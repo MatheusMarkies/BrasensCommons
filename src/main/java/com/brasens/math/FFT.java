@@ -67,7 +67,7 @@ public class FFT {
             double re = normalizedData[2 * j];
             double im = normalizedData[2 * j + 1];
             fftValues[j] = Math.sqrt(re * re + im * im);
-            freq[j] = (double) j / windowSize;
+            freq[j] = (double) j / ((double) n /2);
         }
 
         Vector2D[] fftResult = new Vector2D[n / 2];

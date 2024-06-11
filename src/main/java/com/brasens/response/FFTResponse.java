@@ -14,7 +14,7 @@ public class FFTResponse {
     int samples;
 
     public List<java.lang.Double> fftValues;
-
+    public List<java.lang.Double> fftFreqs;
     private ZonedDateTime added = ZonedDateTime.now(DEFAULT_TIMEZONE.toZoneId());
 
     public FFTResponse() {
@@ -66,5 +66,13 @@ public class FFTResponse {
 
     public void setAdded(ZonedDateTime added) {
         this.added = added;
+    }
+
+    public List<Double> getFftFreqs() {
+        return fftFreqs;
+    }
+
+    public void setFftFreqs(List<Double> fftFreqs) {
+        this.fftFreqs = fftFreqs;
     }
 }
