@@ -27,7 +27,7 @@ public class Vector {
     @Column(name = "mag")
     private double mag;
 
-    public Vector(double x, double y){
+    public Vector(double x, double y) {
         this.x = x;
         this.y = y;
     }

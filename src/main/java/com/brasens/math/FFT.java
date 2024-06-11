@@ -51,13 +51,14 @@ public class FFT {
     }
 
     public static Vector2D[] fft(double[] valuesArray, int windowSize) {
-        double[] normalizedData = normalize(valuesArray);
+        int n = nearestLowerPowerOfTwo(valuesArray.length);
+        double[] reindexedValues = reindexValues(valuesArray, n);
+        double[] normalizedData = normalize(reindexedValues);
 
         applyWindow(normalizedData);
 
-        int n = nearestLowerPowerOfTwo(valuesArray.length);
         DoubleFFT_1D fft = new DoubleFFT_1D(n);
-        fft.realForwardFull(normalizedData);
+        fft.realForward(normalizedData);
 
         double[] fftValues = new double[n / 2];
         double[] freq = new double[n / 2];
@@ -75,6 +76,14 @@ public class FFT {
         }
 
         return fftResult;
+    }
+
+    public static double[] reindexValues(double[] values, int indexs){
+        double[] data = new double[indexs];
+        for(int i =0; i<indexs;i++){
+            data[i] = values[i];
+        }
+        return data;
     }
 
     public static double[][] fft3D(double[] xData, double[] yData, double[] zData, int windowSize) {

@@ -30,13 +30,13 @@ public class Data {
     @GeneratedValue
     @Column(name = "id", columnDefinition = "uuid", nullable = false, unique = true)
     private UUID id;
-    
+
     @Column(name = "rms_x")
     private Double rmsX;
-    
+
     @Column(name = "rms_y")
     private Double rmsY;
-    
+
     @Column(name = "rms_z")
     private Double rmsZ;
     
