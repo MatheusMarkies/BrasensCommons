@@ -48,7 +48,6 @@ public class FFTComponents {
     private List<Vector> harmonics = new ArrayList<>();
 
     @ManyToOne(targetEntity = FFTModel.class, fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JoinColumn(name = "id_cluster", nullable = false)
     @JsonIgnore
     private FFTModel fftModel;
