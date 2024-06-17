@@ -4,7 +4,7 @@ import org.jtransforms.fft.DoubleFFT_1D;
 
 public class FFT {
 
-    public static int SENSOR_RANGE = 1600;
+    public static int SENSOR_RANGE = 25800;
 
     public static double[] normalize(Double[] valuesArray) {
         double[] normalizedData = new double[valuesArray.length];
@@ -67,7 +67,7 @@ public class FFT {
             double re = normalizedData[2 * j];
             double im = normalizedData[2 * j + 1];
             fftValues[j] = Math.sqrt(re * re + im * im);
-            freq[j] = (double) j / ((double) n /2);
+            freq[j] = (double) j / ((double) n /2);//SENSOR_RANGE
         }
 
         Vector2D[] fftResult = new Vector2D[n / 2];
