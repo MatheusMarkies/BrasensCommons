@@ -61,4 +61,9 @@ public class MachineIntervals{
 	@JoinColumn(name = "id_asset", nullable = false)
 	@JsonIgnore
 	private Asset asset;
+
+	public MachineIntervals(ZonedDateTime added, AssetState assetState) {
+		this.added = added;
+		this.assetState = assetState;
+	}
 }

@@ -28,4 +28,9 @@ public class Vector {
 
     @Column(name = "y")
     private double y;
+
+    public Vector(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
 }
