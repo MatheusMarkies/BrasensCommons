@@ -94,7 +94,15 @@ public class Asset {
 
 	@OneToOne(mappedBy = "Asset", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	@JsonIgnore
-	private VibrationSensorReading sensorReading;
+	private VibrationSensorReading sensorReading_X;
+
+	@OneToOne(mappedBy = "Asset", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private VibrationSensorReading sensorReading_Y;
+
+	@OneToOne(mappedBy = "Asset", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private VibrationSensorReading sensorReading_Z;
 
 	@OneToMany(targetEntity = Alert.class, mappedBy = "Asset", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	@JsonIgnore
