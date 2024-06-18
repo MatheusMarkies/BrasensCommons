@@ -1,6 +1,10 @@
 package com.brasens.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -9,7 +13,11 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name="roles")
+@Table(name="Roles")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Role {
 
     @Id
@@ -24,7 +32,7 @@ public class Role {
 
     @JsonIgnore
     @OneToMany(mappedBy = "role")
-    private List<ClientModel> clients = new ArrayList<>();
+    private List<Employees> employees = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "organization_id")
@@ -41,64 +49,4 @@ public class Role {
             joinColumns = { @JoinColumn(name = "id_role") },
             inverseJoinColumns = { @JoinColumn(name = "id_privilege") })
     private List<Privilege> privileges = new ArrayList<>();
-
-    public Role() {
-    }
-
-    public Role(UUID id, String role, String color, List<ClientModel> clients, Organization organization, List<Privilege> privileges) {
-        this.id = id;
-        this.role = role;
-        this.color = color;
-        this.clients = clients;
-        this.organization = organization;
-        this.privileges = privileges;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public List<ClientModel> getClients() {
-        return clients;
-    }
-
-    public void setClients(List<ClientModel> clients) {
-        this.clients = clients;
-    }
-
-    public Organization getOrganization() {
-        return organization;
-    }
-
-    public void setOrganization(Organization organization) {
-        this.organization = organization;
-    }
-
-    public List<Privilege> getPrivileges() {
-        return privileges;
-    }
-
-    public void setPrivileges(List<Privilege> privileges) {
-        this.privileges = privileges;
-    }
 }

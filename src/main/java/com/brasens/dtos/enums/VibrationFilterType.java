@@ -2,6 +2,7 @@ package com.brasens.dtos.enums;
 
 public enum VibrationFilterType {
     HIGHPASS("Passa Alta"),
+    BANDPASS("Passa Banda"),
     LOWPASS("Passa Baixa"),
     NONE("Nenhum");
 
@@ -21,6 +22,8 @@ public enum VibrationFilterType {
                 return VibrationFilterType.HIGHPASS;
             case "Passa Baixa":
                 return VibrationFilterType.LOWPASS;
+            case "Passa Banda":
+                return VibrationFilterType.BANDPASS;
             case "Nenhum":
                 return VibrationFilterType.NONE;
             default:

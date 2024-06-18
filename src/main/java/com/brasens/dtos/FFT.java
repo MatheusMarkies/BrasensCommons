@@ -12,15 +12,17 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name="Data")
+@Table(name="FFT")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Data {
+public class FFT {
     @Id
     @GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
     @GeneratedValue(generator = "UUIDGenerator")
@@ -28,24 +30,10 @@ public class Data {
     @JsonIgnore
     private UUID id;
 
-    @Column(name = "acceleration_rms_x")
-    double accelerationRMS_X;
-    @Column(name = "acceleration_rms_y")
-    double accelerationRMS_Y;
-    @Column(name = "acceleration_rms_z")
-    double accelerationRMS_Z;
-
-    @Column(name = "speed_rms_x")
-    double speedRMS_X;
-    @Column(name = "speed_rms_y")
-    double speedRMS_Y;
-    @Column(name = "speed_rms_z")
-    double speedRMS_Z;
-
-    @Column(name = "temperature")
-    double temperature;
-    @Column(name = "battery")
-    double battery;
+    @OneToMany(targetEntity = Vector.class, cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "values_id")
+    @JsonIgnore
+    private List<Vector> values = new ArrayList<>();
 
     @Column(name = "asset_key", unique = true)
     private String key;
@@ -54,9 +42,16 @@ public class Data {
     @Column(name = "added", insertable = false, updatable = false)
     private ZonedDateTime added;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.NO_ACTION)
-    @JoinColumn(name = "asset_id", nullable = false)
+    @OneToOne(mappedBy = "FFT", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private FFTStatisticalValues statisticalValues;
+
+    @OneToOne(mappedBy = "FFT", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Envelope envelope;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "asset_id")
     @JsonIgnore
     private Asset asset;
 }

@@ -7,20 +7,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name="Data")
+@Table(name="Vibration_Sensor_Reading")
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class Data {
+@NoArgsConstructor
+public class VibrationSensorReading {
     @Id
     @GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
     @GeneratedValue(generator = "UUIDGenerator")
@@ -28,24 +28,9 @@ public class Data {
     @JsonIgnore
     private UUID id;
 
-    @Column(name = "acceleration_rms_x")
-    double accelerationRMS_X;
-    @Column(name = "acceleration_rms_y")
-    double accelerationRMS_Y;
-    @Column(name = "acceleration_rms_z")
-    double accelerationRMS_Z;
-
-    @Column(name = "speed_rms_x")
-    double speedRMS_X;
-    @Column(name = "speed_rms_y")
-    double speedRMS_Y;
-    @Column(name = "speed_rms_z")
-    double speedRMS_Z;
-
-    @Column(name = "temperature")
-    double temperature;
-    @Column(name = "battery")
-    double battery;
+    @Column(name = "data_array", columnDefinition = "double precision[]")
+    @Type(type = "list-array")
+    public List<Double> data;
 
     @Column(name = "asset_key", unique = true)
     private String key;
@@ -54,9 +39,16 @@ public class Data {
     @Column(name = "added", insertable = false, updatable = false)
     private ZonedDateTime added;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.NO_ACTION)
-    @JoinColumn(name = "asset_id", nullable = false)
+    @OneToOne(mappedBy = "Vibration_Sensor_Reading", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private VibrationSensorReadingStatisticalValues statisticalValues;
+
+    @OneToOne(mappedBy = "Vibration_Sensor_Reading", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Distribution distribution;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "asset_id")
     @JsonIgnore
     private Asset asset;
 }

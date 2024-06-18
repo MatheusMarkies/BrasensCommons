@@ -15,6 +15,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.brasens.dtos.enums.AssetState;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -31,8 +35,11 @@ import io.hypersistence.utils.hibernate.type.basic.PostgreSQLEnumType;
 	    name = "assetstate",
 	    typeClass = PostgreSQLEnumType.class
 )
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class MachineIntervals{
-
 	@Id
     @GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
     @GeneratedValue(generator = "UUIDGenerator")
@@ -54,59 +61,4 @@ public class MachineIntervals{
 	@JoinColumn(name = "id_asset", nullable = false)
 	@JsonIgnore
 	private Asset asset;
-
-    public MachineIntervals(ZonedDateTime added, AssetState assetState){
-        this.added = added;
-        this.assetState = assetState;
-    }
-
-    @Override
-    public String toString() {
-        return "MachineIntervals{" +
-                "added=" + added +
-                ", assetStatus=" + assetState +
-                '}';
-    }
-
-    public MachineIntervals() {
-    }
-
-    public MachineIntervals(UUID id, ZonedDateTime added, AssetState assetState, Asset asset) {
-        this.id = id;
-        this.added = added;
-        this.assetState = assetState;
-        this.asset = asset;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public ZonedDateTime getAdded() {
-        return added;
-    }
-
-    public void setAdded(ZonedDateTime added) {
-        this.added = added;
-    }
-
-    public AssetState getAssetState() {
-        return assetState;
-    }
-
-    public void setAssetState(AssetState assetState) {
-        this.assetState = assetState;
-    }
-
-    public Asset getAsset() {
-        return asset;
-    }
-
-    public void setAsset(Asset asset) {
-        this.asset = asset;
-    }
 }

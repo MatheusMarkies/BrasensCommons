@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
-public interface FFTRepository extends JpaRepository<Alert, UUID> {
+public interface DowntimeRepository extends JpaRepository<Alert, UUID> {
 }

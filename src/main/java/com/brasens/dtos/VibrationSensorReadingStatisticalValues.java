@@ -13,12 +13,12 @@ import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name="Workorder")
+@Table(name="Vibration_Sensor_Reading_Statistical_Values")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Workorder {
+public class VibrationSensorReadingStatisticalValues {
     @Id
     @GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
     @GeneratedValue(generator = "UUIDGenerator")
@@ -26,11 +26,31 @@ public class Workorder {
     @JsonIgnore
     private UUID id;
 
+    @Column(name = "crest_factor")
+    double crestFactor;
+
+    @Column(name = "k_factor")
+    double kFactor;
+
+    @Column(name = "z_score")
+    double zScore;
+
+    double rms;
+    double peak;
+
+    @Column(name = "peak_to_peak")
+    double peakToPeak;
+
+    double skewness;
+    double kurtosis;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", timezone = "UTC")
     @Column(name = "added", insertable = false, updatable = false)
     private ZonedDateTime added;
 
-    @ManyToOne
-    @JoinColumn(name = "organization_id")
-    private Organization organization;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "vibration_sensor_reading_id")
+    @JsonIgnore
+    private VibrationSensorReading vibrationSensorReading;
+
 }

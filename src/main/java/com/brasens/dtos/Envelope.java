@@ -10,15 +10,17 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name="Workorder")
+@Table(name="Envelope")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class Workorder {
+@AllArgsConstructor
+public class Envelope {
     @Id
     @GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
     @GeneratedValue(generator = "UUIDGenerator")
@@ -26,11 +28,17 @@ public class Workorder {
     @JsonIgnore
     private UUID id;
 
+    @OneToMany(targetEntity = Vector.class, cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "values_id")
+    @JsonIgnore
+    private List<Vector> values = new ArrayList<>();
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", timezone = "UTC")
     @Column(name = "added", insertable = false, updatable = false)
     private ZonedDateTime added;
 
-    @ManyToOne
-    @JoinColumn(name = "organization_id")
-    private Organization organization;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fft_id")
+    @JsonIgnore
+    private FFT fft;
 }

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name="privileges")
+@Table(name="Privileges")
 public class Privilege {
 
     @Id
