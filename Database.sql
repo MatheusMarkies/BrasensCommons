@@ -1,15 +1,46 @@
-CREATE TYPE alertlevel AS ENUM ('LOW', 'MEDIUM', 'HIGH');
-CREATE TYPE downtimetype AS ENUM ('PLANNED', 'UNPLANNED');
-CREATE TYPE assetstate AS ENUM ('ACTIVE', 'INACTIVE');
+CREATE TYPE alertlevel AS ENUM ('NORMAL', 'HIGH', 'CRITICAL');
+CREATE TYPE public.assetstate AS ENUM ('WORKING', 'IDLE');
+CREATE TYPE public.downtimetype AS ENUM ('MANUAL', 'AUTOMATIC');
+
+-- Create Organization table first
+CREATE TABLE Organization (
+    id UUID PRIMARY KEY,
+    name VARCHAR(255)
+);
+
+CREATE TABLE Role (
+    id UUID PRIMARY KEY,
+    role VARCHAR(255),
+    color VARCHAR(255),
+    organization_id UUID,
+    FOREIGN KEY (organization_id) REFERENCES Organization(id)
+);
 
 CREATE TABLE Asset (
     id UUID PRIMARY KEY,
     name VARCHAR(255) UNIQUE,
     asset_key VARCHAR(255) UNIQUE,
     last_communication TIMESTAMPTZ NOT NULL,
-    added TIMESTAMPTZ NOT NULL DEFAULT current_timestamp AT TIME ZONE 'America/Sao_Paulo',
+    added TIMESTAMP WITH TIME ZONE DEFAULT (now() AT TIME ZONE 'America/Sao_Paulo'),
     organization_id UUID,
     FOREIGN KEY (organization_id) REFERENCES Organization(id)
+);
+
+CREATE TABLE Vibration_Sensor_Reading (
+    id UUID PRIMARY KEY,
+    data_array DOUBLE PRECISION[],
+    asset_key VARCHAR(255) UNIQUE,
+    added TIMESTAMP WITH TIME ZONE DEFAULT (now() AT TIME ZONE 'America/Sao_Paulo'),
+    asset_id UUID,
+    FOREIGN KEY (asset_id) REFERENCES Asset(id)
+);
+
+CREATE TABLE FFT (
+    id UUID PRIMARY KEY,
+    asset_key VARCHAR(255) UNIQUE,
+    added TIMESTAMP WITH TIME ZONE DEFAULT (now() AT TIME ZONE 'America/Sao_Paulo'),
+    asset_id UUID,
+    FOREIGN KEY (asset_id) REFERENCES Asset(id)
 );
 
 CREATE TABLE Alert (
@@ -44,14 +75,14 @@ CREATE TABLE Data (
     temperature DOUBLE PRECISION,
     battery DOUBLE PRECISION,
     asset_key VARCHAR(255) UNIQUE,
-    added TIMESTAMPTZ NOT NULL DEFAULT current_timestamp AT TIME ZONE 'America/Sao_Paulo',
+    added TIMESTAMP WITH TIME ZONE DEFAULT (now() AT TIME ZONE 'America/Sao_Paulo'),
     asset_id UUID NOT NULL,
     FOREIGN KEY (asset_id) REFERENCES Asset(id)
 );
 
 CREATE TABLE Distribution (
     id UUID PRIMARY KEY,
-    added TIMESTAMPTZ NOT NULL DEFAULT current_timestamp AT TIME ZONE 'America/Sao_Paulo',
+    added TIMESTAMP WITH TIME ZONE DEFAULT (now() AT TIME ZONE 'America/Sao_Paulo'),
     vibration_sensor_reading_id UUID,
     FOREIGN KEY (vibration_sensor_reading_id) REFERENCES Vibration_Sensor_Reading(id)
 );
@@ -61,7 +92,7 @@ CREATE TABLE Downtime (
     downtime DOUBLE PRECISION,
     downtime_type downtimetype,
     asset_state assetstate,
-    added TIMESTAMPTZ NOT NULL DEFAULT current_timestamp AT TIME ZONE 'America/Sao_Paulo',
+    added TIMESTAMP WITH TIME ZONE DEFAULT (now() AT TIME ZONE 'America/Sao_Paulo'),
     asset_id UUID,
     FOREIGN KEY (asset_id) REFERENCES Asset(id)
 );
@@ -73,7 +104,7 @@ CREATE TABLE Employees (
     password VARCHAR(255),
     salt VARCHAR(255),
     image_link VARCHAR(255),
-    added TIMESTAMPTZ NOT NULL DEFAULT current_timestamp AT TIME ZONE 'America/Sao_Paulo',
+    added TIMESTAMP WITH TIME ZONE DEFAULT (now() AT TIME ZONE 'America/Sao_Paulo'),
     role_id UUID,
     organization_id UUID,
     FOREIGN KEY (role_id) REFERENCES Role(id),
@@ -82,7 +113,7 @@ CREATE TABLE Employees (
 
 CREATE TABLE Envelope (
     id UUID PRIMARY KEY,
-    added TIMESTAMPTZ NOT NULL DEFAULT current_timestamp AT TIME ZONE 'America/Sao_Paulo',
+    added TIMESTAMP WITH TIME ZONE DEFAULT (now() AT TIME ZONE 'America/Sao_Paulo'),
     fft_id UUID,
     FOREIGN KEY (fft_id) REFERENCES FFT(id)
 );
@@ -96,14 +127,6 @@ CREATE TABLE Events (
     FOREIGN KEY (asset_id) REFERENCES Asset(id)
 );
 
-CREATE TABLE FFT (
-    id UUID PRIMARY KEY,
-    asset_key VARCHAR(255) UNIQUE,
-    added TIMESTAMPTZ NOT NULL DEFAULT current_timestamp AT TIME ZONE 'America/Sao_Paulo',
-    asset_id UUID,
-    FOREIGN KEY (asset_id) REFERENCES Asset(id)
-);
-
 CREATE TABLE FFT_Statistical_Values (
     id UUID PRIMARY KEY,
     rpm DOUBLE PRECISION,
@@ -111,7 +134,7 @@ CREATE TABLE FFT_Statistical_Values (
     peak_to_peak DOUBLE PRECISION,
     skewness DOUBLE PRECISION,
     kurtosis DOUBLE PRECISION,
-    added TIMESTAMPTZ NOT NULL DEFAULT current_timestamp AT TIME ZONE 'America/Sao_Paulo',
+    added TIMESTAMP WITH TIME ZONE DEFAULT (now() AT TIME ZONE 'America/Sao_Paulo'),
     fft_id UUID,
     FOREIGN KEY (fft_id) REFERENCES FFT(id)
 );
@@ -122,11 +145,6 @@ CREATE TABLE MachineIntervals (
     asset_state assetstate,
     id_asset UUID NOT NULL,
     FOREIGN KEY (id_asset) REFERENCES Asset(id)
-);
-
-CREATE TABLE Organization (
-    id UUID PRIMARY KEY,
-    name VARCHAR(255)
 );
 
 CREATE TABLE PasswordResetToken (
@@ -142,23 +160,6 @@ CREATE TABLE Privilege (
     name VARCHAR(255)
 );
 
-CREATE TABLE Role (
-    id UUID PRIMARY KEY,
-    role VARCHAR(255),
-    color VARCHAR(255),
-    organization_id UUID,
-    FOREIGN KEY (organization_id) REFERENCES Organization(id)
-);
-
-CREATE TABLE Vibration_Sensor_Reading (
-    id UUID PRIMARY KEY,
-    data_array DOUBLE PRECISION[],
-    asset_key VARCHAR(255) UNIQUE,
-    added TIMESTAMPTZ NOT NULL DEFAULT current_timestamp AT TIME ZONE 'America/Sao_Paulo',
-    asset_id UUID,
-    FOREIGN KEY (asset_id) REFERENCES Asset(id)
-);
-
 CREATE TABLE Vibration_Sensor_Reading_Statistical_Values (
     id UUID PRIMARY KEY,
     crest_factor DOUBLE PRECISION,
@@ -169,14 +170,14 @@ CREATE TABLE Vibration_Sensor_Reading_Statistical_Values (
     peak_to_peak DOUBLE PRECISION,
     skewness DOUBLE PRECISION,
     kurtosis DOUBLE PRECISION,
-    added TIMESTAMPTZ NOT NULL DEFAULT current_timestamp AT TIME ZONE 'America/Sao_Paulo',
+    added TIMESTAMP WITH TIME ZONE DEFAULT (now() AT TIME ZONE 'America/Sao_Paulo'),
     vibration_sensor_reading_id UUID,
     FOREIGN KEY (vibration_sensor_reading_id) REFERENCES Vibration_Sensor_Reading(id)
 );
 
 CREATE TABLE Workorder (
     id UUID PRIMARY KEY,
-    added TIMESTAMPTZ NOT NULL DEFAULT current_timestamp AT TIME ZONE 'America/Sao_Paulo',
+    added TIMESTAMP WITH TIME ZONE DEFAULT (now() AT TIME ZONE 'America/Sao_Paulo'),
     organization_id UUID,
     FOREIGN KEY (organization_id) REFERENCES Organization(id)
 );
@@ -196,7 +197,6 @@ CREATE TABLE roles_privileges (
 );
 
 -- one-to-many associations
-ALTER TABLE Asset ADD CONSTRAINT fk_role FOREIGN KEY (role_id) REFERENCES Role(id);
 ALTER TABLE Asset ADD CONSTRAINT fk_organization FOREIGN KEY (organization_id) REFERENCES Organization(id);
 ALTER TABLE Alert ADD CONSTRAINT fk_asset FOREIGN KEY (id_asset) REFERENCES Asset(id);
 ALTER TABLE Data ADD CONSTRAINT fk_asset_data FOREIGN KEY (asset_id) REFERENCES Asset(id);
