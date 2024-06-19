@@ -38,6 +38,11 @@ public class VibrationSensorReadingStatisticalValues {
     double rms;
     double peak;
 
+    double mean;
+
+    @Column(name = "standard_deviation")
+    double standardDeviation;
+
     @Column(name = "peak_to_peak")
     double peakToPeak;
 

@@ -168,6 +168,8 @@ CREATE TABLE Vibration_Sensor_Reading_Statistical_Values (
     rms DOUBLE PRECISION,
     peak DOUBLE PRECISION,
     peak_to_peak DOUBLE PRECISION,
+    standard_deviation DOUBLE PRECISION,
+    mean DOUBLE PRECISION,
     skewness DOUBLE PRECISION,
     kurtosis DOUBLE PRECISION,
     added TIMESTAMP WITH TIME ZONE DEFAULT (now() AT TIME ZONE 'America/Sao_Paulo'),
