@@ -1,5 +1,7 @@
 package com.brasens.math.statistic;
 
+import com.brasens.dtos.Vector;
+import com.brasens.math.Vector2D;
 import org.apache.commons.math3.distribution.NormalDistribution;
 
 import java.util.ArrayList;
@@ -11,13 +13,28 @@ import java.util.Objects;
 
 public class DescriptiveStatistics {
 
-    public static List<Double> createNormalDistribution(double mean, double standardDeviation, int size) {
+    public static List<Vector> createNormalDistribution(double mean, double standardDeviation, int size) {
+        List<Vector> distribution = new ArrayList<>();
         NormalDistribution normalDistribution = new NormalDistribution(mean, standardDeviation);
-        List<Double> normalData = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            normalData.add(normalDistribution.sample());
-        }
-        return normalData;
+
+            double startX = mean - 3 * standardDeviation;
+            double endX = mean + 3 * standardDeviation;
+            double step = (endX - startX) / (size - 1);
+
+            List<Double> xValues = new ArrayList<>();
+            for (int i = 0; i < size; i++) {
+                xValues.add(startX + i * step);
+            }
+          List<Double> yValues = new ArrayList<>();
+            for (double x : xValues) {
+                yValues.add(normalDistribution.density(x));
+            }
+
+            for(int i =0;i< yValues.size();i++){
+                distribution.add(new Vector2D(xValues.get(i), yValues.get(i)).toVector());
+            }
+
+        return distribution;
     }
 
     public static double Mean(List<Double> data) {
