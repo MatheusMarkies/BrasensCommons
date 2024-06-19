@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static com.brasens.Commons.DEFAULT_TIMEZONE;
+
 @Entity
 @Table(name="Distribution")
 @Getter
@@ -40,5 +42,5 @@ public class Distribution {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", timezone = "UTC")
     @Column(name = "added", insertable = false, updatable = false)
-    private ZonedDateTime added;
+    private ZonedDateTime added = ZonedDateTime.now().withZoneSameInstant(DEFAULT_TIMEZONE.toZoneId());
 }

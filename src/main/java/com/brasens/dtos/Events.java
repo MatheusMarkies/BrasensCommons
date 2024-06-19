@@ -30,6 +30,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.hypersistence.utils.hibernate.type.basic.PostgreSQLEnumType;
 
+import static com.brasens.Commons.DEFAULT_TIMEZONE;
+
 @Entity
 @Table(name = "events")
 @TypeDef(
@@ -50,7 +52,7 @@ public class Events {
 	
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", timezone = "UTC")
     @Column(name = "added", nullable = false)
-    private ZonedDateTime added;
+    private ZonedDateTime added = ZonedDateTime.now().withZoneSameInstant(DEFAULT_TIMEZONE.toZoneId());
     
     @Column(name = "description")
     private String description;

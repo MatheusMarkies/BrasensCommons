@@ -12,6 +12,8 @@ import javax.persistence.*;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
+import static com.brasens.Commons.DEFAULT_TIMEZONE;
+
 @Entity
 @Table(name="Vibration_Sensor_Reading_Statistical_Values")
 @Getter
@@ -54,7 +56,7 @@ public class VibrationSensorReadingStatisticalValues {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", timezone = "UTC")
     @Column(name = "added", insertable = false, updatable = false)
-    private ZonedDateTime added;
+    private ZonedDateTime added = ZonedDateTime.now().withZoneSameInstant(DEFAULT_TIMEZONE.toZoneId());
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vibration_sensor_reading_id")

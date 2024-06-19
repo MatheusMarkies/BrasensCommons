@@ -45,13 +45,18 @@ public class Asset {
 	@Column(name = "asset_key", unique = true)
 	private String key;
 
+	//Add Asset Information
+
+	@Column(name = "rpm", nullable = true)
+	private double rpm;
+
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", timezone = "UTC")
 	@Column(name = "last_communication", nullable = false)
 	private ZonedDateTime lastCommunication = ZonedDateTime.now(DEFAULT_TIMEZONE.toZoneId());
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", timezone = "UTC")
 	@Column(name = "added", insertable = false, updatable = false)
-	private ZonedDateTime added;
+	private ZonedDateTime added = ZonedDateTime.now().withZoneSameInstant(DEFAULT_TIMEZONE.toZoneId());
 
 	@OneToMany(targetEntity = Events.class, mappedBy = "Asset", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	@JsonIgnore
@@ -107,6 +112,10 @@ public class Asset {
 	@OneToMany(targetEntity = Alert.class, mappedBy = "Asset", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<Alert> alerts = new ArrayList<>();
+
+	@ManyToOne
+	@JoinColumn(name = "bearing_id", nullable = true)
+	private Bearings bearing;
 
 	@ManyToOne
 	@JoinColumn(name = "organization_id")
