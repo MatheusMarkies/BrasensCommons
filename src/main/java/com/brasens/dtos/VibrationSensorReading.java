@@ -28,6 +28,10 @@ public class VibrationSensorReading {
     @JsonIgnore
     private UUID id;
 
+    @Column(name = "temporal_array", columnDefinition = "double precision[]")
+    @Type(type = "list-array")
+    public List<Double> temporalValues;
+
     @Column(name = "data_array", columnDefinition = "double precision[]")
     @Type(type = "list-array")
     public List<Double> data;

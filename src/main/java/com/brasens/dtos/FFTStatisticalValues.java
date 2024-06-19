@@ -38,6 +38,11 @@ public class FFTStatisticalValues {
     @JsonIgnore
     private List<Vector> harmonics = new ArrayList<>();
 
+    @OneToMany(targetEntity = Vector.class, cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "orders_id")
+    @JsonIgnore
+    private List<Vector> orders = new ArrayList<>();
+
     @OneToOne(mappedBy = "FFT_Statistical_Values", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore
     private Vector naturalFrequency;
