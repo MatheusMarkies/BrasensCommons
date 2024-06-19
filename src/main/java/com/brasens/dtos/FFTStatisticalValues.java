@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
@@ -59,6 +60,10 @@ public class FFTStatisticalValues {
     @Column(name = "standard_deviation")
     double standardDeviation;
     double variance;
+
+    @Column(name = "zscores_array", columnDefinition = "double precision[]")
+    @Type(type = "list-array")
+    public List<Double> zScores;
 
     @Column(name = "peak_to_peak")
     double peakToPeak;

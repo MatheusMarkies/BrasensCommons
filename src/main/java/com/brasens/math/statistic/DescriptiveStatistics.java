@@ -94,4 +94,20 @@ public class DescriptiveStatistics {
             sum += Math.pow((d - distributionMean), 3);
         return sum / ((distribution.size() - 1) * Math.pow(distributionStd, 3));
     }
+
+    public static List<Double> calculateZScores(List<Double> data, double mean, double standardDeviation) {
+        List<Double> zScores = new ArrayList<>();
+        for (double d : data) {
+            double z = (d - mean) / standardDeviation;
+            zScores.add(z);
+        }
+        return zScores;
+    }
+
+    public static double[] getMaxMinZScores(List<Double> zScores) {
+        double maxZScore = Collections.max(zScores);
+        double minZScore = Collections.min(zScores);
+        return new double[]{maxZScore, minZScore};
+    }
+
 }

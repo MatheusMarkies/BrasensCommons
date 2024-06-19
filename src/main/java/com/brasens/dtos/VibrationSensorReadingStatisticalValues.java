@@ -7,9 +7,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.UUID;
 
 import static com.brasens.Commons.DEFAULT_TIMEZONE;
@@ -35,7 +37,11 @@ public class VibrationSensorReadingStatisticalValues {
     double kFactor;
 
     @Column(name = "z_score")
-    double zScore;
+    double zScoreMax;
+
+    @Column(name = "zscores_array", columnDefinition = "double precision[]")
+    @Type(type = "list-array")
+    public List<Double> zScores;
 
     double rms;
     double peak;
