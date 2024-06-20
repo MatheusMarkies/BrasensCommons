@@ -1,10 +1,14 @@
 package com.brasens.math;
 
+import com.brasens.dtos.Vector;
 import com.github.psambit9791.jdsp.filter.Butterworth;
 import com.github.psambit9791.jdsp.transform.FastFourier;
 import com.github.psambit9791.jdsp.transform.Hilbert;
 import com.github.psambit9791.jdsp.transform._Fourier;
 import org.jtransforms.fft.DoubleFFT_1D;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FFT {
 
@@ -133,18 +137,18 @@ public class FFT {
         return result;
     }
 
-    public static Vector2D[] calculatePSD(double[] fftValues, int n, int sampleRate) {
-        Vector2D[] psd = new Vector2D[fftValues.length];
+    public static List<Vector> calculatePSD(double[] fftValues, int n, int sampleRate) {
+        List<Vector>  psd = new ArrayList<>();
         double freq;
         for (int i = 0; i < fftValues.length; i++) {
             double psdValue = (fftValues[i] * fftValues[i]) / (double) (n * sampleRate);
             freq = (double) i * (sampleRate / n);
-            psd[i] = new Vector2D(freq, psdValue);
+            psd.add(new Vector2D(freq, psdValue).toVector());
         }
         return psd;
     }
 
-    public static Vector2D[] hilbertTransform(double[] valuesArray) {
+    public static List<Vector> hilbertTransform(double[] valuesArray) {
         int n = valuesArray.length;
         double[] transformed = new double[n];
 
@@ -168,9 +172,9 @@ public class FFT {
             transformed[i] = fftData[2 * i + 1];
         }
 
-        Vector2D[] hilbertResult = new Vector2D[n];
+        List<Vector> hilbertResult = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-            hilbertResult[i] = new Vector2D((double) i / n, transformed[i]);
+            hilbertResult.add(new Vector2D((double) i / n, transformed[i]).toVector());
         }
 
         return hilbertResult;
@@ -211,7 +215,7 @@ public class FFT {
         return transformed;
     }
 
-    public static Vector2D[] envelope(double[] fft, int SENSOR_DATARATE, int SAMPLES) {
+    public static List<Vector> envelope(double[] fft, int SENSOR_DATARATE, int SAMPLES) {
         Hilbert h = new Hilbert(fft);
         h.transform();
         double[][] analytical_signal = h.getOutput();
@@ -219,15 +223,15 @@ public class FFT {
 
         double freqResolution = SAMPLES / SENSOR_DATARATE;
 
-        Vector2D[] vecs = new Vector2D[envelope.length];
+        List<Vector> vecs = new ArrayList<>();
         for(int i =0; i< envelope.length;i++){
-            vecs[i] = new Vector2D(freqResolution * i, envelope[i]);
+            vecs.add(new Vector2D(freqResolution * i, envelope[i]).toVector());
         }
 
         return vecs;
     }
 
-    public static Vector2D[] jdspFFT(double[] signal, int SENSOR_DATARATE, int SAMPLES) {
+    public static List<Vector> jdspFFT(double[] signal, int SENSOR_DATARATE, int SAMPLES) {
         _Fourier ft = new FastFourier(signal);
         ft.transform();
         boolean onlyPositive = true;
@@ -235,9 +239,9 @@ public class FFT {
         double freqResolution = SAMPLES/SENSOR_DATARATE;
         double[] out = ft.getMagnitude(onlyPositive);
 
-        Vector2D[] vecs = new Vector2D[out.length];
+        List<Vector> vecs = new ArrayList<>();
         for(int i =0; i< out.length;i++){
-            vecs[i] = new Vector2D(freqResolution * i, out[i]);
+            vecs.add(new Vector2D(freqResolution * i, out[i]).toVector());
         }
 
         return vecs;
