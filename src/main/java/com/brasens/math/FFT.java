@@ -1,5 +1,9 @@
 package com.brasens.math;
 
+import com.github.psambit9791.jdsp.filter.Butterworth;
+import com.github.psambit9791.jdsp.transform.FastFourier;
+import com.github.psambit9791.jdsp.transform.Hilbert;
+import com.github.psambit9791.jdsp.transform._Fourier;
 import org.jtransforms.fft.DoubleFFT_1D;
 
 public class FFT {
@@ -129,6 +133,116 @@ public class FFT {
         return result;
     }
 
+    public static Vector2D[] calculatePSD(double[] fftValues, int n, int sampleRate) {
+        Vector2D[] psd = new Vector2D[fftValues.length];
+        double freq;
+        for (int i = 0; i < fftValues.length; i++) {
+            double psdValue = (fftValues[i] * fftValues[i]) / (double) (n * sampleRate);
+            freq = (double) i * (sampleRate / n);
+            psd[i] = new Vector2D(freq, psdValue);
+        }
+        return psd;
+    }
+
+    public static Vector2D[] hilbertTransform(double[] valuesArray) {
+        int n = valuesArray.length;
+        double[] transformed = new double[n];
+
+        DoubleFFT_1D fft = new DoubleFFT_1D(n);
+        double[] fftData = new double[2 * n];
+        System.arraycopy(valuesArray, 0, fftData, 0, n);
+        fft.realForwardFull(fftData);
+
+        for (int i = 1; i < n / 2; i++) {
+            fftData[2 * i] *= 2;
+            fftData[2 * i + 1] *= 2;
+        }
+        for (int i = n / 2; i < n; i++) {
+            fftData[2 * i] = 0;
+            fftData[2 * i + 1] = 0;
+        }
+
+        fft.complexInverse(fftData, true);
+
+        for (int i = 0; i < n; i++) {
+            transformed[i] = fftData[2 * i + 1];
+        }
+
+        Vector2D[] hilbertResult = new Vector2D[n];
+        for (int i = 0; i < n; i++) {
+            hilbertResult[i] = new Vector2D((double) i / n, transformed[i]);
+        }
+
+        return hilbertResult;
+    }
+
+    public static double[] getPSDDoubleArray(double[] fftValues, int n, int sampleRate) {
+        double[] psd = new double[fftValues.length];
+        for (int i = 0; i < fftValues.length; i++) {
+            psd[i] = (fftValues[i] * fftValues[i]) / (double) (n * sampleRate);
+        }
+        return psd;
+    }
+
+    public static double[] getHilbertTransformDoubleArray(double[] valuesArray) {
+        int n = valuesArray.length;
+        double[] transformed = new double[n];
+
+        DoubleFFT_1D fft = new DoubleFFT_1D(n);
+        double[] fftData = new double[2 * n];
+        System.arraycopy(valuesArray, 0, fftData, 0, n);
+        fft.realForwardFull(fftData);
+
+        for (int i = 1; i < n / 2; i++) {
+            fftData[2 * i] *= 2;
+            fftData[2 * i + 1] *= 2;
+        }
+        for (int i = n / 2; i < n; i++) {
+            fftData[2 * i] = 0;
+            fftData[2 * i + 1] = 0;
+        }
+
+        fft.complexInverse(fftData, true);
+
+        for (int i = 0; i < n; i++) {
+            transformed[i] = fftData[2 * i + 1];
+        }
+
+        return transformed;
+    }
+
+    public static Vector2D[] envelope(double[] fft, int SENSOR_DATARATE, int SAMPLES) {
+        Hilbert h = new Hilbert(fft);
+        h.transform();
+        double[][] analytical_signal = h.getOutput();
+        double[] envelope = h.getAmplitudeEnvelope();
+
+        double freqResolution = SAMPLES / SENSOR_DATARATE;
+
+        Vector2D[] vecs = new Vector2D[envelope.length];
+        for(int i =0; i< envelope.length;i++){
+            vecs[i] = new Vector2D(freqResolution * i, envelope[i]);
+        }
+
+        return vecs;
+    }
+
+    public static Vector2D[] jdspFFT(double[] signal, int SENSOR_DATARATE, int SAMPLES) {
+        _Fourier ft = new FastFourier(signal);
+        ft.transform();
+        boolean onlyPositive = true;
+
+        double freqResolution = SAMPLES/SENSOR_DATARATE;
+        double[] out = ft.getMagnitude(onlyPositive);
+
+        Vector2D[] vecs = new Vector2D[out.length];
+        for(int i =0; i< out.length;i++){
+            vecs[i] = new Vector2D(freqResolution * i, out[i]);
+        }
+
+        return vecs;
+    }
+
     private static void applyWindow(double[] valuesArray) {
         int n = valuesArray.length;
         for (int i = 0; i < n; i++) {
@@ -143,5 +257,4 @@ public class FFT {
         }
         return powerOfTwo >> 1;
     }
-
 }
