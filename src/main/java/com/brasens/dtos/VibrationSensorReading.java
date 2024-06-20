@@ -50,10 +50,9 @@ public class VibrationSensorReading {
     //@JsonIgnore
     //private VibrationSensorReadingStatisticalValues statisticalValues;
 
-    @OneToMany(targetEntity = VibrationSensorReadingStatisticalValues.class, cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "statistical_values_id")
+    @OneToOne(mappedBy = "Vibration_Sensor_Reading", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<VibrationSensorReadingStatisticalValues> statisticalValues = new ArrayList<>();
+    private VibrationSensorReadingStatisticalValues statisticalValues;
 
     @OneToOne(mappedBy = "Vibration_Sensor_Reading", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore

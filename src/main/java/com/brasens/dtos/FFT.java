@@ -48,10 +48,9 @@ public class FFT {
     //@JsonIgnore
     //private FFTStatisticalValues statisticalValues;
 
-    @OneToMany(targetEntity = FFTStatisticalValues.class, cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "statistical_values_id")
+    @OneToOne(mappedBy = "FFT", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<FFTStatisticalValues> statisticalValues = new ArrayList<>();
+    private FFTStatisticalValues statisticalValues;
 
     @OneToOne(mappedBy = "FFT", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore
