@@ -32,7 +32,7 @@ import io.hypersistence.utils.hibernate.type.basic.PostgreSQLEnumType;
 import static com.brasens.Commons.DEFAULT_TIMEZONE;
 
 @Entity
-@Table(name = "machineintervals")
+@Table(name = "Machine_Intervals")
 @TypeDef(
 	    name = "assetstate",
 	    typeClass = PostgreSQLEnumType.class

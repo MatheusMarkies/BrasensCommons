@@ -13,7 +13,7 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name="vector")
+@Table(name="Vector")
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor
 public class Vector {
     @Id

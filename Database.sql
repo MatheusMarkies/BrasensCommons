@@ -1,3 +1,4 @@
+-- Enum Types
 CREATE TYPE alertlevel AS ENUM ('NORMAL', 'HIGH', 'CRITICAL');
 CREATE TYPE public.assetstate AS ENUM ('WORKING', 'IDLE');
 CREATE TYPE public.downtimetype AS ENUM ('MANUAL', 'AUTOMATIC');
@@ -26,13 +27,23 @@ CREATE TABLE Asset (
     FOREIGN KEY (organization_id) REFERENCES Organization(id)
 );
 
+CREATE TABLE History (
+    id UUID PRIMARY KEY,
+    asset_key VARCHAR(255) UNIQUE,
+    added TIMESTAMP WITH TIME ZONE DEFAULT (now() AT TIME ZONE 'America/Sao_Paulo'),
+    asset_id UUID,
+    FOREIGN KEY (asset_id) REFERENCES Asset(id)
+);
+
 CREATE TABLE Vibration_Sensor_Reading (
     id UUID PRIMARY KEY,
     data_array DOUBLE PRECISION[],
     asset_key VARCHAR(255) UNIQUE,
     added TIMESTAMP WITH TIME ZONE DEFAULT (now() AT TIME ZONE 'America/Sao_Paulo'),
     asset_id UUID,
-    FOREIGN KEY (asset_id) REFERENCES Asset(id)
+    history_id UUID,
+    FOREIGN KEY (asset_id) REFERENCES Asset(id),
+    FOREIGN KEY (history_id) REFERENCES History(id)
 );
 
 CREATE TABLE FFT (
@@ -40,7 +51,18 @@ CREATE TABLE FFT (
     asset_key VARCHAR(255) UNIQUE,
     added TIMESTAMP WITH TIME ZONE DEFAULT (now() AT TIME ZONE 'America/Sao_Paulo'),
     asset_id UUID,
-    FOREIGN KEY (asset_id) REFERENCES Asset(id)
+    history_id UUID,
+    FOREIGN KEY (asset_id) REFERENCES Asset(id),
+    FOREIGN KEY (history_id) REFERENCES History(id)
+);
+
+CREATE TABLE PSD (
+    id UUID PRIMARY KEY,
+    added TIMESTAMP WITH TIME ZONE DEFAULT (now() AT TIME ZONE 'America/Sao_Paulo'),
+    fft_id UUID,
+    history_id UUID,
+    FOREIGN KEY (fft_id) REFERENCES FFT(id),
+    FOREIGN KEY (history_id) REFERENCES History(id)
 );
 
 CREATE TABLE Alert (
@@ -221,3 +243,8 @@ ALTER TABLE Envelope ADD CONSTRAINT fk_fft FOREIGN KEY (fft_id) REFERENCES FFT(i
 ALTER TABLE FFT_Statistical_Values ADD CONSTRAINT fk_fft_statistical FOREIGN KEY (fft_id) REFERENCES FFT(id);
 ALTER TABLE Vibration_Sensor_Reading_Statistical_Values ADD CONSTRAINT fk_vibration_sensor_reading_statistical FOREIGN KEY (vibration_sensor_reading_id) REFERENCES Vibration_Sensor_Reading(id);
 ALTER TABLE Workorder ADD CONSTRAINT fk_organization_workorder FOREIGN KEY (organization_id) REFERENCES Organization(id);
+
+-- history associations
+ALTER TABLE FFT ADD CONSTRAINT fk_history_fft FOREIGN KEY (history_id) REFERENCES History(id);
+ALTER TABLE Vibration_Sensor_Reading ADD CONSTRAINT fk_history_vibration_sensor_reading FOREIGN KEY (history_id) REFERENCES History(id);
+ALTER TABLE PSD ADD CONSTRAINT fk_history_psd FOREIGN KEY (history_id) REFERENCES History(id);

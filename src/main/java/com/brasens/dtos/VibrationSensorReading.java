@@ -58,6 +58,11 @@ public class VibrationSensorReading {
     @JsonIgnore
     private Distribution distribution;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "history_id")
+    @JsonIgnore
+    private History history;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "asset_id")
     @JsonIgnore
