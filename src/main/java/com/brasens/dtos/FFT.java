@@ -44,9 +44,14 @@ public class FFT {
     @Column(name = "added", insertable = false, updatable = false)
     private ZonedDateTime added = ZonedDateTime.now().withZoneSameInstant(DEFAULT_TIMEZONE.toZoneId());
 
-    @OneToOne(mappedBy = "FFT", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    //@OneToOne(mappedBy = "FFT", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    //@JsonIgnore
+    //private FFTStatisticalValues statisticalValues;
+
+    @OneToMany(targetEntity = FFTStatisticalValues.class, cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "statistical_values_id")
     @JsonIgnore
-    private FFTStatisticalValues statisticalValues;
+    private List<FFTStatisticalValues> statisticalValues = new ArrayList<>();
 
     @OneToOne(mappedBy = "FFT", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore

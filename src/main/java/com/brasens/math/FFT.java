@@ -11,12 +11,12 @@ public class FFT {
         double minValue = Double.MAX_VALUE;
         double maxValue = Double.MIN_VALUE;
 
-        for (int i = 0; i < valuesArray.length; i++) {
-            if (valuesArray[i] < minValue) {
-                minValue = valuesArray[i];
+        for (double v : valuesArray) {
+            if (v < minValue) {
+                minValue = v;
             }
-            if (valuesArray[i] > maxValue) {
-                maxValue = valuesArray[i];
+            if (v > maxValue) {
+                maxValue = v;
             }
         }
 
@@ -33,12 +33,12 @@ public class FFT {
         double minValue = Double.MAX_VALUE;
         double maxValue = Double.MIN_VALUE;
 
-        for (int i = 0; i < valuesArray.length; i++) {
-            if (valuesArray[i] < minValue) {
-                minValue = valuesArray[i];
+        for (double v : valuesArray) {
+            if (v < minValue) {
+                minValue = v;
             }
-            if (valuesArray[i] > maxValue) {
-                maxValue = valuesArray[i];
+            if (v > maxValue) {
+                maxValue = v;
             }
         }
 
@@ -50,8 +50,8 @@ public class FFT {
         return normalizedData;
     }
 
-    public static Vector2D[] fft(double[] valuesArray, int windowSize) {
-        int n = nearestLowerPowerOfTwo(valuesArray.length);
+    public static Vector2D[] fft(double[] valuesArray, int windowSize, int SAMPLE_RATE) {
+        int n = windowSize;
         double[] reindexedValues = reindexValues(valuesArray, n);
         double[] normalizedData = normalize(reindexedValues);
 
@@ -67,7 +67,7 @@ public class FFT {
             double re = normalizedData[2 * j];
             double im = normalizedData[2 * j + 1];
             fftValues[j] = Math.sqrt(re * re + im * im);
-            freq[j] = (double) j / ((double) n /2);//SENSOR_RANGE
+            freq[j] = (double) j * (SAMPLE_RATE / n);
         }
 
         Vector2D[] fftResult = new Vector2D[n / 2];
@@ -78,27 +78,21 @@ public class FFT {
         return fftResult;
     }
 
-    public static double[] reindexValues(double[] values, int indexs){
+    public static double[] reindexValues(double[] values, int indexs) {
         double[] data = new double[indexs];
-        for(int i =0; i<indexs;i++){
-            data[i] = values[i];
-        }
+        System.arraycopy(values, 0, data, 0, indexs);
         return data;
     }
 
     public static double[][] fft3D(double[] xData, double[] yData, double[] zData, int windowSize) {
-        // Normalize the data
         xData = normalize(xData);
         yData = normalize(yData);
         zData = normalize(zData);
 
-        // Create an array to hold the results
         double[][] result = new double[3][];
 
-        // Perform FFT on each axis
         DoubleFFT_1D fft = new DoubleFFT_1D(windowSize);
 
-        // FFT on x-axis
         double[] xFFTData = new double[2 * windowSize];
         System.arraycopy(xData, 0, xFFTData, 0, windowSize);
         fft.realForward(xFFTData);
@@ -110,7 +104,6 @@ public class FFT {
             result[0][i] = Math.sqrt(re * re + im * im) / (double) windowSize * 2;
         }
 
-        // FFT on y-axis
         double[] yFFTData = new double[2 * windowSize];
         System.arraycopy(yData, 0, yFFTData, 0, windowSize);
         fft.realForward(yFFTData);
@@ -122,7 +115,6 @@ public class FFT {
             result[1][i] = Math.sqrt(re * re + im * im) / (double) windowSize * 2;
         }
 
-        // FFT on z-axis
         double[] zFFTData = new double[2 * windowSize];
         System.arraycopy(zData, 0, zFFTData, 0, windowSize);
         fft.realForward(zFFTData);
@@ -137,16 +129,7 @@ public class FFT {
         return result;
     }
 
-    private static void applyWindow(Double[] valuesArray) {
-        // Apply a Hamming window to the data
-        int n = valuesArray.length;
-        for (int i = 0; i < n; i++) {
-            valuesArray[i] *= 0.54 - 0.46 * Math.cos(2 * Math.PI * i / (n - 1));
-        }
-    }
-
     private static void applyWindow(double[] valuesArray) {
-        // Aplicar uma janela de Hamming aos dados
         int n = valuesArray.length;
         for (int i = 0; i < n; i++) {
             valuesArray[i] *= 0.54 - 0.46 * Math.cos(2 * Math.PI * i / (n - 1));
@@ -160,4 +143,5 @@ public class FFT {
         }
         return powerOfTwo >> 1;
     }
+
 }

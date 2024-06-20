@@ -11,6 +11,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -45,9 +46,14 @@ public class VibrationSensorReading {
     @Column(name = "added", insertable = false, updatable = false)
     private ZonedDateTime added = ZonedDateTime.now().withZoneSameInstant(DEFAULT_TIMEZONE.toZoneId());
 
-    @OneToOne(mappedBy = "Vibration_Sensor_Reading", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    //@OneToOne(mappedBy = "Vibration_Sensor_Reading", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    //@JsonIgnore
+    //private VibrationSensorReadingStatisticalValues statisticalValues;
+
+    @OneToMany(targetEntity = VibrationSensorReadingStatisticalValues.class, cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "statistical_values_id")
     @JsonIgnore
-    private VibrationSensorReadingStatisticalValues statisticalValues;
+    private List<VibrationSensorReadingStatisticalValues> statisticalValues = new ArrayList<>();
 
     @OneToOne(mappedBy = "Vibration_Sensor_Reading", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore

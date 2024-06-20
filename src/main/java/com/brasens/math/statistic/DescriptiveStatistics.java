@@ -14,27 +14,14 @@ import java.util.Objects;
 public class DescriptiveStatistics {
 
     public static List<Vector> createNormalDistribution(double mean, double standardDeviation, int size) {
-        List<Vector> distribution = new ArrayList<>();
         NormalDistribution normalDistribution = new NormalDistribution(mean, standardDeviation);
-
-            double startX = mean - 3 * standardDeviation;
-            double endX = mean + 3 * standardDeviation;
-            double step = (endX - startX) / (size - 1);
-
-            List<Double> xValues = new ArrayList<>();
-            for (int i = 0; i < size; i++) {
-                xValues.add(startX + i * step);
-            }
-          List<Double> yValues = new ArrayList<>();
-            for (double x : xValues) {
-                yValues.add(normalDistribution.density(x));
-            }
-
-            for(int i =0;i< yValues.size();i++){
-                distribution.add(new Vector2D(xValues.get(i), yValues.get(i)).toVector());
-            }
-
-        return distribution;
+        List<Vector> distributionValues = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            double x = normalDistribution.sample();
+            double y = normalDistribution.density(x);
+            distributionValues.add(new Vector(x, y));
+        }
+        return distributionValues;
     }
 
     public static double Mean(List<Double> data) {
