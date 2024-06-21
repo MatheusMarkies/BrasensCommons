@@ -46,7 +46,8 @@ public class FFTStatisticalValues {
     @JsonIgnore
     private List<Vector> orders = new ArrayList<>();
 
-    @OneToOne(mappedBy = "FFT_Statistical_Values", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "natural_frequency_id", referencedColumnName = "id")
     @JsonIgnore
     private Vector naturalFrequency;
 
