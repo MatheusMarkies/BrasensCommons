@@ -30,4 +30,13 @@ public class PasswordResetToken {
     private Employees client;
 
     private Date expiryDate;
+
+    public boolean isTokenFound(PasswordResetToken passToken) {
+        return passToken != null;
+    }
+
+    public boolean isTokenExpired() {
+        final Calendar cal = Calendar.getInstance();
+        return expiryDate.before(cal.getTime());
+    }
 }
