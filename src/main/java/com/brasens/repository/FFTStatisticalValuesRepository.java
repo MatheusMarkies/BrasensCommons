@@ -11,6 +11,6 @@ import java.util.List;
 import java.util.UUID;
 
 public interface FFTStatisticalValuesRepository extends JpaRepository<FFTStatisticalValues, UUID> {
-    @Query("select f from FFT_Statistical_Values f where f.added >= :added")
+    @Query("select f from FFTStatisticalValues f where f.added >= :added")
     List<FFTStatisticalValues> findAllWithAddedAfter(@Param("added") ZonedDateTime added);
 }
