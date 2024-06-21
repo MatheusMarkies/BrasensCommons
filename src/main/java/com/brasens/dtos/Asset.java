@@ -113,6 +113,19 @@ public class Asset {
 	@JsonIgnore
 	private List<Alert> alerts = new ArrayList<>();
 
+	@OneToOne(mappedBy = "main", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private AssetTree assetTree;
+
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+	@JoinColumn(name = "asset_tree_id", nullable = true)
+	@JsonIgnore
+	private AssetTree assetTreeBelonging;
+
+	@OneToOne(mappedBy = "Asset", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private History history;
+
 	@ManyToOne
 	@JoinColumn(name = "bearing_id", nullable = true)
 	private Bearings bearing;

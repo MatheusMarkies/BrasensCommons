@@ -17,14 +17,36 @@ CREATE TABLE Role (
     FOREIGN KEY (organization_id) REFERENCES Organization(id)
 );
 
+CREATE TABLE Bearings (
+    id UUID PRIMARY KEY,
+    brand VARCHAR(255),
+    identifier VARCHAR(255),
+    element_amount INT,
+    FTF DOUBLE PRECISION,
+    BSF DOUBLE PRECISION,
+    BPFO DOUBLE PRECISION,
+    BPFI DOUBLE PRECISION
+);
+
 CREATE TABLE Asset (
     id UUID PRIMARY KEY,
     name VARCHAR(255) UNIQUE,
     asset_key VARCHAR(255) UNIQUE,
+    rpm DOUBLE PRECISION,
     last_communication TIMESTAMPTZ NOT NULL,
     added TIMESTAMP WITH TIME ZONE DEFAULT (now() AT TIME ZONE 'America/Sao_Paulo'),
+    bearing_id UUID,
     organization_id UUID,
-    FOREIGN KEY (organization_id) REFERENCES Organization(id)
+    asset_tree_id UUID,
+    FOREIGN KEY (organization_id) REFERENCES Organization(id),
+    FOREIGN KEY (bearing_id) REFERENCES Bearings(id),
+    FOREIGN KEY (asset_tree_id) REFERENCES AssetTree(id)
+);
+
+CREATE TABLE AssetTree (
+    id UUID PRIMARY KEY,
+    asset_id UUID,
+    FOREIGN KEY (asset_id) REFERENCES Asset(id)
 );
 
 CREATE TABLE History (
@@ -60,9 +82,7 @@ CREATE TABLE PSD (
     id UUID PRIMARY KEY,
     added TIMESTAMP WITH TIME ZONE DEFAULT (now() AT TIME ZONE 'America/Sao_Paulo'),
     fft_id UUID,
-    history_id UUID,
-    FOREIGN KEY (fft_id) REFERENCES FFT(id),
-    FOREIGN KEY (history_id) REFERENCES History(id)
+    FOREIGN KEY (fft_id) REFERENCES FFT(id)
 );
 
 CREATE TABLE Alert (
@@ -73,17 +93,6 @@ CREATE TABLE Alert (
     alert_tags VARCHAR(255),
     id_asset UUID NOT NULL,
     FOREIGN KEY (id_asset) REFERENCES Asset(id)
-);
-
-CREATE TABLE Bearings (
-    id UUID PRIMARY KEY,
-    brand VARCHAR(255),
-    identifier VARCHAR(255),
-    element_amount INT,
-    FTF DOUBLE PRECISION,
-    BSF DOUBLE PRECISION,
-    BPFO DOUBLE PRECISION,
-    BPFI DOUBLE PRECISION
 );
 
 CREATE TABLE Data (
@@ -247,4 +256,7 @@ ALTER TABLE Workorder ADD CONSTRAINT fk_organization_workorder FOREIGN KEY (orga
 -- history associations
 ALTER TABLE FFT ADD CONSTRAINT fk_history_fft FOREIGN KEY (history_id) REFERENCES History(id);
 ALTER TABLE Vibration_Sensor_Reading ADD CONSTRAINT fk_history_vibration_sensor_reading FOREIGN KEY (history_id) REFERENCES History(id);
-ALTER TABLE PSD ADD CONSTRAINT fk_history_psd FOREIGN KEY (history_id) REFERENCES History(id);
+ALTER TABLE PSD ADD CONSTRAINT fk_fft_psd FOREIGN KEY (fft_id) REFERENCES FFT(id);
+
+-- asset tree associations
+ALTER TABLE Asset ADD CONSTRAINT fk_asset_tree FOREIGN KEY (asset_tree_id) REFERENCES AssetTree(id);

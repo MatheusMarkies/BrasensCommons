@@ -44,7 +44,7 @@ public class Alert {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
-    @JoinColumn(name = "id_asset", nullable = false)
+    @JoinColumn(name = "asset_id", nullable = false)
     @JsonIgnore
     private Asset asset;
 }
