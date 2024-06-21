@@ -68,5 +68,4 @@ public class VibrationSensorReadingStatisticalValues {
     @JoinColumn(name = "vibration_sensor_reading_id")
     @JsonIgnore
     private VibrationSensorReading vibrationSensorReading;
-
 }
