@@ -48,15 +48,15 @@ public class FFT {
     //@JsonIgnore
     //private FFTStatisticalValues statisticalValues;
 
-    @OneToOne(mappedBy = "FFT", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "fft", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore
     private FFTStatisticalValues statisticalValues;
 
-    @OneToOne(mappedBy = "FFT", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "fft", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore
     private PSD psd;
 
-    @OneToOne(mappedBy = "FFT", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "fft", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore
     private Envelope envelope;
 

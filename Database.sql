@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS Asset_Tree (
 
 -- Adding foreign key constraint if not already existing
 ALTER TABLE IF EXISTS Asset ADD CONSTRAINT asset_id FOREIGN KEY (asset_tree_id)
-REFERENCES AssetTree (id);
+REFERENCES Asset_Tree (id);
 
 -- History Table
 CREATE TABLE History (
