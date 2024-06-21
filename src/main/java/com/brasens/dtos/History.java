@@ -33,43 +33,43 @@ public class History {
     @Column(name = "asset_key", unique = true)
     private String key;
 
-    @OneToOne(mappedBy = "Asset", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY)
     @JsonIgnore
     private Downtime downtime;
 
-    @OneToMany(targetEntity = FFT.class, mappedBy = "History", orphanRemoval = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = FFT.class, mappedBy = "history", orphanRemoval = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<FFT> fftAcceleration_X = new ArrayList<>();
 
-    @OneToMany(targetEntity = FFT.class, mappedBy = "History", orphanRemoval = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = FFT.class, mappedBy = "history", orphanRemoval = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<FFT> fftAcceleration_Y = new ArrayList<>();
 
-    @OneToMany(targetEntity = FFT.class, mappedBy = "History", orphanRemoval = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = FFT.class, mappedBy = "history", orphanRemoval = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<FFT> fftAcceleration_Z = new ArrayList<>();
 
-    @OneToMany(targetEntity = FFT.class, mappedBy = "History", orphanRemoval = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = FFT.class, mappedBy = "history", orphanRemoval = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<FFT> fftSpeeds_X = new ArrayList<>();
 
-    @OneToMany(targetEntity = FFT.class, mappedBy = "History", orphanRemoval = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = FFT.class, mappedBy = "history", orphanRemoval = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<FFT> fftSpeeds_Y = new ArrayList<>();
 
-    @OneToMany(targetEntity = FFT.class, mappedBy = "History", orphanRemoval = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = FFT.class, mappedBy = "history", orphanRemoval = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<FFT> fftSpeeds_Z = new ArrayList<>();
 
-    @OneToMany(targetEntity = VibrationSensorReading.class, mappedBy = "History", orphanRemoval = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = VibrationSensorReading.class, mappedBy = "history", orphanRemoval = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<VibrationSensorReading> sensorReadings_X = new ArrayList<>();
 
-    @OneToMany(targetEntity = VibrationSensorReading.class, mappedBy = "History", orphanRemoval = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = VibrationSensorReading.class, mappedBy = "history", orphanRemoval = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<VibrationSensorReading> sensorReadings_Y = new ArrayList<>();
 
-    @OneToMany(targetEntity = VibrationSensorReading.class, mappedBy = "History", orphanRemoval = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = VibrationSensorReading.class, mappedBy = "history", orphanRemoval = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<VibrationSensorReading> sensorReadings_Z = new ArrayList<>();
 

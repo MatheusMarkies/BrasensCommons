@@ -25,19 +25,20 @@ public class Organization {
 
     private String name;
 
-    @OneToMany(mappedBy = "Organization", cascade = CascadeType.DETACH, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "organization", cascade = CascadeType.DETACH, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Role> roles = new ArrayList<>();
 
-    @OneToMany(mappedBy = "Organization", cascade = CascadeType.DETACH, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "organization", cascade = CascadeType.DETACH, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Employees> employees = new ArrayList<>();
 
-    @OneToMany(mappedBy = "Organization", cascade = CascadeType.DETACH, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "organization", cascade = CascadeType.DETACH, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Asset> assets = new ArrayList<>();
 
-    @OneToMany(mappedBy = "Organization", cascade = CascadeType.DETACH, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "organization", cascade = CascadeType.DETACH, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Workorder> workorder = new ArrayList<>();
 }
+
