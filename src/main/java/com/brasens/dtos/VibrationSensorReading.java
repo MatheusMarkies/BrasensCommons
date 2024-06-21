@@ -18,12 +18,13 @@ import java.util.UUID;
 import static com.brasens.Commons.DEFAULT_TIMEZONE;
 
 @Entity
-@Table(name="Vibration_Sensor_Reading")
+@Table(name = "Vibration_Sensor_Reading")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class VibrationSensorReading {
+
     @Id
     @GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
     @GeneratedValue(generator = "UUIDGenerator")
@@ -46,15 +47,11 @@ public class VibrationSensorReading {
     @Column(name = "added", insertable = false, updatable = false)
     private ZonedDateTime added = ZonedDateTime.now().withZoneSameInstant(DEFAULT_TIMEZONE.toZoneId());
 
-    //@OneToOne(mappedBy = "Vibration_Sensor_Reading", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    //@JsonIgnore
-    //private VibrationSensorReadingStatisticalValues statisticalValues;
-
-    @OneToOne(mappedBy = "Vibration_Sensor_Reading", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "vibrationSensorReading", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore
     private VibrationSensorReadingStatisticalValues statisticalValues;
 
-    @OneToOne(mappedBy = "Vibration_Sensor_Reading", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "vibrationSensorReading", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore
     private Distribution distribution;
 
