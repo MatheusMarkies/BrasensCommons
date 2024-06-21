@@ -10,6 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 @Entity
+@Table(name="Password_Reset_Token")
 @Getter
 @Setter
 @AllArgsConstructor
