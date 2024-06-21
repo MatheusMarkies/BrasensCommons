@@ -11,5 +11,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface DowntimeRepository extends JpaRepository<Downtime, UUID> {
-    Optional<Downtime> findByKey(String key);
+
 }
