@@ -39,4 +39,9 @@ public class PasswordResetToken {
         final Calendar cal = Calendar.getInstance();
         return expiryDate.before(cal.getTime());
     }
+
+    public PasswordResetToken(String token, Employees client) {
+        this.token = token;
+        this.client = client;
+    }
 }
