@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EventsRepository extends JpaRepository<Events, UUID> {
-    List<Events> findByKey(String key);
+
 }

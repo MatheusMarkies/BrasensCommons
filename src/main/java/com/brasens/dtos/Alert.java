@@ -42,6 +42,9 @@ public class Alert {
     @Column(name = "alert_tags")
     private String tags;
 
+    @Column(name = "asset_key", unique = true)
+    private String key;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JoinColumn(name = "asset_id", nullable = false)
