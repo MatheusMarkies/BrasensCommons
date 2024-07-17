@@ -113,18 +113,21 @@ public class Asset {
 	@JsonIgnore
 	private List<Alert> alerts = new ArrayList<>();
 
-	@OneToOne(mappedBy = "main", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@OneToOne(mappedBy = "childrens", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private AssetTree assetTree;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-	@JoinColumn(name = "asset_tree_id", nullable = true)
+	@OneToOne(mappedBy = "childrens", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	@JsonIgnore
-	private AssetTree assetTreeBelonging;
+	private LocationTree locationTree;
 
 	@OneToOne(mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private History history;
+
+	@OneToMany(targetEntity = ValuesHistoryForTrend.class, mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<ValuesHistoryForTrend> valuesHistoryForTrends = new ArrayList<>();
 
 	@ManyToOne
 	@JoinColumn(name = "bearing_id", nullable = true)

@@ -40,5 +40,9 @@ public class Organization {
     @OneToMany(mappedBy = "organization", cascade = CascadeType.DETACH, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Workorder> workorder = new ArrayList<>();
+
+    @OneToMany(targetEntity = LocationTree.class, mappedBy = "organization", cascade = CascadeType.DETACH, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<LocationTree> locations = new ArrayList<>();
 }
 

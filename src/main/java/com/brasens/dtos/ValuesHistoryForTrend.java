@@ -8,17 +8,15 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name="Asset_Tree")
+@Table(name = "History")
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class AssetTree {
+@NoArgsConstructor
+public class ValuesHistoryForTrend {
     @Id
     @GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
     @GeneratedValue(generator = "UUIDGenerator")
@@ -29,12 +27,10 @@ public class AssetTree {
     @Column(name = "asset_key", unique = true)
     private String key;
 
-    @OneToMany(targetEntity = Asset.class, mappedBy = "assetTree", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<Asset> childrens = new ArrayList<>();
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "asset_id")
     @JsonIgnore
-    private Asset main;
+    private Asset asset;
+
+
 }
