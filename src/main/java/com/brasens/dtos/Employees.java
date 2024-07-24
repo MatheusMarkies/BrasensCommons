@@ -55,6 +55,10 @@ public class Employees {
     @Column(name = "added", insertable = false, updatable = false)
     private ZonedDateTime added = ZonedDateTime.now().withZoneSameInstant(DEFAULT_TIMEZONE.toZoneId());
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", timezone = "UTC")
+    @Column(name = "last_activity", insertable = false, updatable = false)
+    private ZonedDateTime lastActivity;
+
     @ManyToOne
     @JoinColumn(name = "organization_id")
     private Organization organization;
