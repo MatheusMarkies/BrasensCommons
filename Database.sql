@@ -39,7 +39,8 @@ CREATE TABLE IF NOT EXISTS Asset (
     organization_id UUID NOT NULL,
     asset_tree_id UUID,  -- Assuming this column already exists
     FOREIGN KEY (organization_id) REFERENCES Organization(id),
-    FOREIGN KEY (bearing_id) REFERENCES Bearings(id)
+    FOREIGN KEY (bearing_id) REFERENCES Bearings(id),
+    FOREIGN KEY (location_id) REFERENCES Location_Tree(id)
 );
 
 -- AssetTree Table
@@ -47,6 +48,12 @@ CREATE TABLE IF NOT EXISTS Asset_Tree (
     id UUID PRIMARY KEY,
 	asset_id UUID UNIQUE NOT NULL,
     FOREIGN KEY (asset_id) REFERENCES Asset(id)
+);
+
+-- LocationTree Table
+CREATE TABLE IF NOT EXISTS Location_Tree (
+    id UUID PRIMARY KEY,
+    location VARCHAR(255) UNIQUE NOT NULL
 );
 
 -- Adding foreign key constraint if not already existing
@@ -267,6 +274,9 @@ ALTER TABLE Data ADD CONSTRAINT fk_asset_data FOREIGN KEY (asset_id) REFERENCES 
 ALTER TABLE Events ADD CONSTRAINT fk_asset_events FOREIGN KEY (asset_id) REFERENCES Asset(id);
 ALTER TABLE Machine_Intervals ADD CONSTRAINT fk_asset_machineintervals FOREIGN KEY (id_asset) REFERENCES Asset(id);
 ALTER TABLE Vibration_Sensor_Reading ADD CONSTRAINT fk_asset_vibration FOREIGN KEY (asset_id) REFERENCES Asset(id);
+ALTER TABLE Location_Tree ADD CONSTRAINT fk_organization FOREIGN KEY (organization_id) REFERENCES Organization(id);
+
+ALTER TABLE Asset ADD CONSTRAINT fk_location FOREIGN KEY (location_id) REFERENCES Location_Tree(id);
 
 ALTER TABLE Distribution ADD CONSTRAINT fk_vibration_sensor_reading FOREIGN KEY (vibration_sensor_reading_id) REFERENCES Vibration_Sensor_Reading(id);
 ALTER TABLE Downtime ADD CONSTRAINT fk_asset_downtime FOREIGN KEY (asset_id) REFERENCES Asset(id);
