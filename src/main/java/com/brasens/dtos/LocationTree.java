@@ -28,7 +28,7 @@ public class LocationTree {
     @Column(name = "location")
     private String location;
 
-    @OneToMany(targetEntity = Asset.class, mappedBy = "locationTree", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "locationTree", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Asset> childrens = new ArrayList<>();
 
