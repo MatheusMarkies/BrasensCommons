@@ -50,6 +50,9 @@ public class Asset {
 	@Column(name = "rpm", nullable = true)
 	private double rpm;
 
+	@Column(name = "location")
+	private String location;
+
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", timezone = "UTC")
 	@Column(name = "last_communication", nullable = false)
 	private ZonedDateTime lastCommunication = ZonedDateTime.now(DEFAULT_TIMEZONE.toZoneId());
@@ -117,9 +120,9 @@ public class Asset {
 	@JsonIgnore
 	private AssetTree assetTree;
 
-	@ManyToOne
-	@JoinColumn(name = "location_tree_id", nullable = false)
-	private LocationTree locationTree;
+	//@ManyToOne
+	//@JoinColumn(name = "location_tree_id", nullable = false)
+	//private LocationTree locationTree;
 
 	@OneToOne(mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY)
 	@JsonIgnore
