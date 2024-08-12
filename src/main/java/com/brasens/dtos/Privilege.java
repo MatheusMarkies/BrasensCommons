@@ -27,12 +27,12 @@ public class Privilege {
             },
             mappedBy = "privileges")
     @JsonIgnore
-    private List<Role> roles = new ArrayList<>();
+    private List<Roles> roles = new ArrayList<>();
 
     public Privilege() {
     }
 
-    public Privilege(UUID id, String name, List<Role> roles) {
+    public Privilege(UUID id, String name, List<Roles> roles) {
         this.id = id;
         this.name = name;
         this.roles = roles;
@@ -54,11 +54,11 @@ public class Privilege {
         this.name = name;
     }
 
-    public List<Role> getRoles() {
+    public List<Roles> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(List<Roles> roles) {
         this.roles = roles;
     }
 }

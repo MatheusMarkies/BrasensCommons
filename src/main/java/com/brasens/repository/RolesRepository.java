@@ -1,12 +1,12 @@
 package com.brasens.repository;
 
-import com.brasens.dtos.Role;
+import com.brasens.dtos.Roles;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 import java.util.UUID;
 @Repository
-public interface RolesRepository extends JpaRepository<Role, UUID> {
-    Optional<Role> findByRole(String role);
+public interface RolesRepository extends JpaRepository<Roles, UUID> {
+    Optional<Roles> findByRole(String role);
 }

@@ -27,7 +27,7 @@ public class Organization {
 
     @OneToMany(mappedBy = "organization", cascade = CascadeType.DETACH, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<Role> roles = new ArrayList<>();
+    private List<Roles> roles = new ArrayList<>();
 
     @OneToMany(mappedBy = "organization", cascade = CascadeType.DETACH, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore

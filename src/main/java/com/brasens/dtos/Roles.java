@@ -18,7 +18,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Role {
+public class Roles {
 
     @Id
     @GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
