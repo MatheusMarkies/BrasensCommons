@@ -29,8 +29,7 @@ public class AssetTree {
     @Column(name = "asset_key", unique = true)
     private String key;
 
-    @OneToMany(targetEntity = Asset.class, mappedBy = "assetTree", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JsonIgnore
+    @OneToMany(mappedBy = "assetTree")
     private List<Asset> childrens = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.LAZY)

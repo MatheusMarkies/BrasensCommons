@@ -116,13 +116,13 @@ public class Asset {
 	@JsonIgnore
 	private List<Alert> alerts = new ArrayList<>();
 
-	@OneToOne(mappedBy = "childrens", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "asset_tree_id")
 	private AssetTree assetTree;
 
-	//@ManyToOne
-	//@JoinColumn(name = "location_tree_id", nullable = false)
-	//private LocationTree locationTree;
+	@ManyToOne
+	@JoinColumn(name = "location_tree_id", nullable = false)
+	private LocationTree locationTree;
 
 	@OneToOne(mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY)
 	@JsonIgnore
