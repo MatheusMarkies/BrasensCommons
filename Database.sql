@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS Asset (
     bearing_id UUID,
     organization_id UUID NOT NULL,
     asset_tree_id UUID,  -- Assuming this column already exists
+    location_id UUID,  -- Assuming this column already exists
     FOREIGN KEY (organization_id) REFERENCES Organization(id),
     FOREIGN KEY (bearing_id) REFERENCES Bearings(id),
     FOREIGN KEY (location_id) REFERENCES Location_Tree(id)

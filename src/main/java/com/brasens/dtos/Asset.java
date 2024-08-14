@@ -130,7 +130,7 @@ public class Asset {
 	private AssetTree assetTree;
 
 	@ManyToOne
-	@JoinColumn(name = "location_tree_id", nullable = false)
+	@JoinColumn(name = "location_id", nullable = false)
 	private LocationTree locationTree;
 
 	@OneToOne(mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY)
