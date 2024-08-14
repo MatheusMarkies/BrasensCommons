@@ -37,42 +37,6 @@ public class History {
     @JsonIgnore
     private Downtime downtime;
 
-    @OneToMany(targetEntity = FFT.class, mappedBy = "history", orphanRemoval = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<FFT> fftAcceleration_X = new ArrayList<>();
-
-    @OneToMany(targetEntity = FFT.class, mappedBy = "history", orphanRemoval = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<FFT> fftAcceleration_Y = new ArrayList<>();
-
-    @OneToMany(targetEntity = FFT.class, mappedBy = "history", orphanRemoval = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<FFT> fftAcceleration_Z = new ArrayList<>();
-
-    @OneToMany(targetEntity = FFT.class, mappedBy = "history", orphanRemoval = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<FFT> fftSpeeds_X = new ArrayList<>();
-
-    @OneToMany(targetEntity = FFT.class, mappedBy = "history", orphanRemoval = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<FFT> fftSpeeds_Y = new ArrayList<>();
-
-    @OneToMany(targetEntity = FFT.class, mappedBy = "history", orphanRemoval = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<FFT> fftSpeeds_Z = new ArrayList<>();
-
-    @OneToMany(targetEntity = VibrationSensorReading.class, mappedBy = "history", orphanRemoval = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<VibrationSensorReading> sensorReadings_X = new ArrayList<>();
-
-    @OneToMany(targetEntity = VibrationSensorReading.class, mappedBy = "history", orphanRemoval = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<VibrationSensorReading> sensorReadings_Y = new ArrayList<>();
-
-    @OneToMany(targetEntity = VibrationSensorReading.class, mappedBy = "history", orphanRemoval = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<VibrationSensorReading> sensorReadings_Z = new ArrayList<>();
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "asset_id")
     @JsonIgnore

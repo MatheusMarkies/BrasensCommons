@@ -60,11 +60,6 @@ public class FFT {
     @JsonIgnore
     private Envelope envelope;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "history_id")
-    @JsonIgnore
-    private History history;
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "asset_id")
     @JsonIgnore

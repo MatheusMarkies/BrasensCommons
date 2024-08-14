@@ -1,4 +1,3 @@
-
 -- Organization Table
 CREATE TABLE Organization (
     id UUID PRIMARY KEY,
@@ -6,7 +5,7 @@ CREATE TABLE Organization (
 );
 
 -- Role Table
-CREATE TABLE Role (
+CREATE TABLE Roles (
     id UUID PRIMARY KEY,
     role VARCHAR(255) NOT NULL,
     color VARCHAR(255),
@@ -40,8 +39,7 @@ CREATE TABLE IF NOT EXISTS Asset (
     asset_tree_id UUID,  -- Assuming this column already exists
     location_id UUID,  -- Assuming this column already exists
     FOREIGN KEY (organization_id) REFERENCES Organization(id),
-    FOREIGN KEY (bearing_id) REFERENCES Bearings(id),
-    FOREIGN KEY (location_id) REFERENCES Location_Tree(id)
+    FOREIGN KEY (bearing_id) REFERENCES Bearings(id)
 );
 
 -- AssetTree Table
@@ -54,6 +52,7 @@ CREATE TABLE IF NOT EXISTS Asset_Tree (
 -- LocationTree Table
 CREATE TABLE IF NOT EXISTS Location_Tree (
     id UUID PRIMARY KEY,
+	organization_id UUID NOT NULL,
     location VARCHAR(255) UNIQUE NOT NULL
 );
 
@@ -159,11 +158,11 @@ CREATE TABLE Employees (
     added TIMESTAMPTZ DEFAULT (now() AT TIME ZONE 'America/Sao_Paulo') NOT NULL,
     role_id UUID NOT NULL,
     organization_id UUID NOT NULL,
-    FOREIGN KEY (role_id) REFERENCES Role(id),
+    FOREIGN KEY (role_id) REFERENCES Roles(id),
     FOREIGN KEY (organization_id) REFERENCES Organization(id)
 );
 
--- Envelope Table
+-- Envelope TableS
 CREATE TABLE Envelope (
     id UUID PRIMARY KEY,
     added TIMESTAMPTZ DEFAULT (now() AT TIME ZONE 'America/Sao_Paulo') NOT NULL,
@@ -218,7 +217,7 @@ CREATE TABLE Password_Reset_Token (
 );
 
 -- Privilege Table
-CREATE TABLE Privilege (
+CREATE TABLE Privileges (
     id UUID PRIMARY KEY,
     name VARCHAR(255) NOT NULL
 );
@@ -242,14 +241,6 @@ CREATE TABLE Vibration_Sensor_Reading_Statistical_Values (
     added TIMESTAMPTZ DEFAULT (now() AT TIME ZONE 'America/Sao_Paulo') NOT NULL,
     vibration_sensor_reading_id UUID NOT NULL,
     FOREIGN KEY (vibration_sensor_reading_id) REFERENCES Vibration_Sensor_Reading(id)
-);
-
--- Workorder Table
-CREATE TABLE Workorder (
-    id UUID PRIMARY KEY,
-    added TIMESTAMPTZ DEFAULT (now() AT TIME ZONE 'America/Sao_Paulo') NOT NULL,
-    organization_id UUID NOT NULL,
-    FOREIGN KEY (organization_id) REFERENCES Organization(id)
 );
 
 -- Vector Table
@@ -284,7 +275,6 @@ ALTER TABLE Downtime ADD CONSTRAINT fk_asset_downtime FOREIGN KEY (asset_id) REF
 ALTER TABLE Envelope ADD CONSTRAINT fk_fft FOREIGN KEY (fft_id) REFERENCES FFT(id);
 ALTER TABLE FFT_Statistical_Values ADD CONSTRAINT fk_fft_statistical FOREIGN KEY (fft_id) REFERENCES FFT(id);
 ALTER TABLE Vibration_Sensor_Reading_Statistical_Values ADD CONSTRAINT fk_vibration_sensor_reading_statistical FOREIGN KEY (vibration_sensor_reading_id) REFERENCES Vibration_Sensor_Reading(id);
-ALTER TABLE Workorder ADD CONSTRAINT fk_organization_workorder FOREIGN KEY (organization_id) REFERENCES Organization(id);
 
 ALTER TABLE FFT ADD CONSTRAINT fk_history_fft FOREIGN KEY (history_id) REFERENCES History(id);
 ALTER TABLE Vibration_Sensor_Reading ADD CONSTRAINT fk_history_vibration_sensor_reading FOREIGN KEY (history_id) REFERENCES History(id);
