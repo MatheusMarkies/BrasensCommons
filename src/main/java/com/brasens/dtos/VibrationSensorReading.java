@@ -34,11 +34,11 @@ public class VibrationSensorReading {
 
     @Column(name = "temporal_array", columnDefinition = "double precision[]")
     @Type(type = "list-array")
-    public List<Double> temporalValues;
+    public List<Double> temporalValues = new ArrayList<>();
 
     @Column(name = "data_array", columnDefinition = "double precision[]")
     @Type(type = "list-array")
-    public List<Double> data;
+    public List<Double> data = new ArrayList<>();
 
     @Column(name = "asset_key", unique = true)
     private String key;
@@ -49,11 +49,11 @@ public class VibrationSensorReading {
 
     @OneToOne(mappedBy = "vibrationSensorReading", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore
-    private VibrationSensorReadingStatisticalValues statisticalValues;
+    private VibrationSensorReadingStatisticalValues statisticalValues = new VibrationSensorReadingStatisticalValues();
 
     @OneToOne(mappedBy = "vibrationSensorReading", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore
-    private Distribution distribution;
+    private Distribution distribution = new Distribution();
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "asset_id")
