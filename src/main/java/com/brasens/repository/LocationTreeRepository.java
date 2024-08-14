@@ -10,4 +10,5 @@ import java.util.UUID;
 public interface LocationTreeRepository extends JpaRepository<LocationTree, UUID> {
     @Override
     Optional<LocationTree> findById(UUID uuid);
+    Optional<LocationTree> findByLocation(String location);
 }
