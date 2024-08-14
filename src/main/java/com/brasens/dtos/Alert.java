@@ -42,7 +42,7 @@ public class Alert {
     @Column(name = "alert_tags")
     private String tags;
 
-    @Column(name = "asset_key", unique = true)
+    @Column(name = "asset_key")
     private String key;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

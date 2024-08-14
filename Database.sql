@@ -11,7 +11,7 @@ CREATE TABLE Roles (
     color VARCHAR(255),
     organization_id UUID NOT NULL,
     FOREIGN KEY (organization_id) REFERENCES Organization(id),
-    UNIQUE (role, organization_id)  -- Ensure role uniqueness within an organization
+     (role, organization_id)  -- Ensure role uniqueness within an organization
 );
 
 -- Bearings Table
@@ -29,8 +29,8 @@ CREATE TABLE Bearings (
 -- Asset Table
 CREATE TABLE IF NOT EXISTS Asset (
     id UUID PRIMARY KEY,
-    name VARCHAR(255) UNIQUE NOT NULL,
-    asset_key VARCHAR(255) UNIQUE NOT NULL,
+    name VARCHAR(255)  NOT NULL,
+    asset_key VARCHAR(255)  NOT NULL,
     rpm DOUBLE PRECISION NOT NULL,
     last_communication TIMESTAMPTZ NOT NULL,
     added TIMESTAMPTZ DEFAULT (now() AT TIME ZONE 'America/Sao_Paulo') NOT NULL,
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS Asset (
 -- AssetTree Table
 CREATE TABLE IF NOT EXISTS Asset_Tree (
     id UUID PRIMARY KEY,
-	asset_id UUID UNIQUE NOT NULL,
+	asset_id UUID  NOT NULL,
     FOREIGN KEY (asset_id) REFERENCES Asset(id)
 );
 
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS Asset_Tree (
 CREATE TABLE IF NOT EXISTS Location_Tree (
     id UUID PRIMARY KEY,
 	organization_id UUID NOT NULL,
-    location VARCHAR(255) UNIQUE NOT NULL
+    location VARCHAR(255)  NOT NULL
 );
 
 -- Adding foreign key constraint if not already existing
@@ -63,7 +63,7 @@ REFERENCES Asset_Tree (id);
 -- History Table
 CREATE TABLE History (
     id UUID PRIMARY KEY,
-    asset_key VARCHAR(255) UNIQUE NOT NULL,
+    asset_key VARCHAR(255)  NOT NULL,
     added TIMESTAMPTZ DEFAULT (now() AT TIME ZONE 'America/Sao_Paulo') NOT NULL,
     asset_id UUID NOT NULL,
     FOREIGN KEY (asset_id) REFERENCES Asset(id)
@@ -73,23 +73,20 @@ CREATE TABLE History (
 CREATE TABLE Vibration_Sensor_Reading (
     id UUID PRIMARY KEY,
     data_array DOUBLE PRECISION[] NOT NULL,
-    asset_key VARCHAR(255) UNIQUE NOT NULL,
+    temporal_array DOUBLE PRECISION[],
+    asset_key VARCHAR(255)  NOT NULL,
     added TIMESTAMPTZ DEFAULT (now() AT TIME ZONE 'America/Sao_Paulo') NOT NULL,
     asset_id UUID NOT NULL,
-    history_id UUID NOT NULL,
-    FOREIGN KEY (asset_id) REFERENCES Asset(id),
-    FOREIGN KEY (history_id) REFERENCES History(id)
+    FOREIGN KEY (asset_id) REFERENCES Asset(id)
 );
 
 -- FFT Table
 CREATE TABLE FFT (
     id UUID PRIMARY KEY,
-    asset_key VARCHAR(255) UNIQUE NOT NULL,
+    asset_key VARCHAR(255)  NOT NULL,
     added TIMESTAMPTZ DEFAULT (now() AT TIME ZONE 'America/Sao_Paulo') NOT NULL,
     asset_id UUID NOT NULL,
-    history_id UUID NOT NULL,
-    FOREIGN KEY (asset_id) REFERENCES Asset(id),
-    FOREIGN KEY (history_id) REFERENCES History(id)
+    FOREIGN KEY (asset_id) REFERENCES Asset(id)
 );
 
 -- PSD Table
@@ -122,7 +119,7 @@ CREATE TABLE Data (
     speed_rms_z DOUBLE PRECISION,
     temperature DOUBLE PRECISION,
     battery DOUBLE PRECISION,
-    asset_key VARCHAR(255) UNIQUE NOT NULL,
+    asset_key VARCHAR(255)  NOT NULL,
     added TIMESTAMPTZ DEFAULT (now() AT TIME ZONE 'America/Sao_Paulo') NOT NULL,
     asset_id UUID NOT NULL,
     FOREIGN KEY (asset_id) REFERENCES Asset(id)
@@ -150,8 +147,8 @@ CREATE TABLE Downtime (
 -- Employees Table
 CREATE TABLE Employees (
     id UUID PRIMARY KEY,
-    name VARCHAR(255) UNIQUE NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
+    name VARCHAR(255)  NOT NULL,
+    email VARCHAR(255)  NOT NULL,
     password VARCHAR(255) NOT NULL,
     salt VARCHAR(255) NOT NULL,
     image_link VARCHAR(255),
@@ -276,8 +273,6 @@ ALTER TABLE Envelope ADD CONSTRAINT fk_fft FOREIGN KEY (fft_id) REFERENCES FFT(i
 ALTER TABLE FFT_Statistical_Values ADD CONSTRAINT fk_fft_statistical FOREIGN KEY (fft_id) REFERENCES FFT(id);
 ALTER TABLE Vibration_Sensor_Reading_Statistical_Values ADD CONSTRAINT fk_vibration_sensor_reading_statistical FOREIGN KEY (vibration_sensor_reading_id) REFERENCES Vibration_Sensor_Reading(id);
 
-ALTER TABLE FFT ADD CONSTRAINT fk_history_fft FOREIGN KEY (history_id) REFERENCES History(id);
-ALTER TABLE Vibration_Sensor_Reading ADD CONSTRAINT fk_history_vibration_sensor_reading FOREIGN KEY (history_id) REFERENCES History(id);
 ALTER TABLE PSD ADD CONSTRAINT fk_fft_psd FOREIGN KEY (fft_id) REFERENCES FFT(id);
 
 ALTER TABLE Asset ADD CONSTRAINT fk_asset_tree FOREIGN KEY (asset_tree_id) REFERENCES Asset_Tree(id);

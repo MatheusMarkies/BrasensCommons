@@ -37,7 +37,7 @@ public class FFT {
     @JsonIgnore
     private List<Vector> values = new ArrayList<>();
 
-    @Column(name = "asset_key", unique = true)
+    @Column(name = "asset_key")
     private String key;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", timezone = "UTC")

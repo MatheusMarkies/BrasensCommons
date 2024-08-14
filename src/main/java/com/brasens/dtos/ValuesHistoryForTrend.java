@@ -24,7 +24,7 @@ public class ValuesHistoryForTrend {
     @JsonIgnore
     private UUID id;
 
-    @Column(name = "asset_key", unique = true)
+    @Column(name = "asset_key")
     private String key;
 
     @OneToOne(fetch = FetchType.LAZY)

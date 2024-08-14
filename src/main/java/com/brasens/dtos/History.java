@@ -30,7 +30,7 @@ public class History {
     @JsonIgnore
     private UUID id;
 
-    @Column(name = "asset_key", unique = true)
+    @Column(name = "asset_key")
     private String key;
 
     @OneToOne(mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY)

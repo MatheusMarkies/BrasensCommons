@@ -40,7 +40,7 @@ public class VibrationSensorReading {
     @Type(type = "list-array")
     public List<Double> data = new ArrayList<>();
 
-    @Column(name = "asset_key", unique = true)
+    @Column(name = "asset_key")
     private String key;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", timezone = "UTC")

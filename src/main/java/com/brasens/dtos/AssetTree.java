@@ -26,7 +26,7 @@ public class AssetTree {
     @JsonIgnore
     private UUID id;
 
-    @Column(name = "asset_key", unique = true)
+    @Column(name = "asset_key")
     private String key;
 
     @OneToMany(mappedBy = "assetTree")
