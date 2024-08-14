@@ -10,8 +10,7 @@ CREATE TABLE Roles (
     role VARCHAR(255) NOT NULL,
     color VARCHAR(255),
     organization_id UUID NOT NULL,
-    FOREIGN KEY (organization_id) REFERENCES Organization(id),
-     (role, organization_id)  -- Ensure role uniqueness within an organization
+    FOREIGN KEY (organization_id) REFERENCES Organization(id)
 );
 
 -- Bearings Table
