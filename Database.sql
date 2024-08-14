@@ -263,8 +263,8 @@ CREATE TABLE roles_privileges (
     id_role UUID NOT NULL,
     id_privilege UUID NOT NULL,
     PRIMARY KEY (id_role, id_privilege),
-    FOREIGN KEY (id_role) REFERENCES Role(id),
-    FOREIGN KEY (id_privilege) REFERENCES Privilege(id)
+    FOREIGN KEY (id_role) REFERENCES Roles(id),
+    FOREIGN KEY (id_privilege) REFERENCES Privileges(id)
 );
 
 -- Ensure data integrity through constraints

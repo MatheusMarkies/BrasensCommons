@@ -53,6 +53,15 @@ public class Asset {
 	@Column(name = "location")
 	private String location;
 
+	//Add Asset Information
+	@Column(name = "base")
+	boolean isRigidBase;
+	@Column(name = "type")
+	private String type; //Pump, Motor, Fan
+
+	int power;
+	int pasNumber = 0;
+
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", timezone = "UTC")
 	@Column(name = "last_communication", nullable = false)
 	private ZonedDateTime lastCommunication = ZonedDateTime.now(DEFAULT_TIMEZONE.toZoneId());
