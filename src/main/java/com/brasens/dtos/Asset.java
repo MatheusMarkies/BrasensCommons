@@ -11,6 +11,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.brasens.dtos.enums.AlertLevel;
 import com.brasens.dtos.enums.AssetState;
 import com.brasens.dtos.enums.DowntimeType;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -31,6 +32,10 @@ import static com.brasens.Commons.DEFAULT_TIMEZONE;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@TypeDef(
+		name = "alertlevel",
+		typeClass = PostgreSQLEnumType.class
+)
 public class Asset {
 	@Id
 	@GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
@@ -120,6 +125,11 @@ public class Asset {
 	@OneToOne(mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private VibrationSensorReading sensorReading_Z;
+
+	@Column(name = "alert_level")
+	@Enumerated(EnumType.STRING)
+	@Type( type = "alertlevel")
+	private AlertLevel level;
 
 	@OneToMany(targetEntity = Alert.class, mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	@JsonIgnore
