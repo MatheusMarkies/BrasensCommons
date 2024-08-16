@@ -1,6 +1,5 @@
 package com.brasens.repository;
 
-import com.brasens.dtos.Alert;
 import com.brasens.dtos.FFTStatisticalValues;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

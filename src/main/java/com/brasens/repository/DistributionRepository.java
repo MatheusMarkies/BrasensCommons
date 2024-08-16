@@ -1,6 +1,5 @@
 package com.brasens.repository;
 
-import com.brasens.dtos.Alert;
 import com.brasens.dtos.Distribution;
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -2,7 +2,6 @@ package com.brasens.dtos;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,8 +11,6 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.brasens.dtos.enums.AlertLevel;
-import com.brasens.dtos.enums.AssetState;
-import com.brasens.dtos.enums.DowntimeType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -131,9 +128,9 @@ public class Asset {
 	@Type( type = "alertlevel")
 	private AlertLevel level;
 
-	@OneToMany(targetEntity = Alert.class, mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@OneToMany(targetEntity = AlertTarget.class, mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	@JsonIgnore
-	private List<Alert> alerts = new ArrayList<>();
+	private List<AlertTarget> alertTargets = new ArrayList<>();
 
 	@ManyToOne
 	@JoinColumn(name = "asset_tree_id")
