@@ -10,5 +10,5 @@ import java.util.UUID;
 
 @Repository
 public interface CriticalValuesRepository  extends JpaRepository<CriticalValues, UUID> {
-    List<CriticalValues> findByKey(String key);
+
 }
