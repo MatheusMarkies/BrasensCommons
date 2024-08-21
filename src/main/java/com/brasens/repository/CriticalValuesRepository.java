@@ -7,7 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.UUID;
+
 @Repository
-public interface AlertRepository extends JpaRepository<Alert, UUID> {
-    List<Alert> findByKey(String key);
+public interface CriticalValuesRepository  extends JpaRepository<CriticalValues, UUID> {
+    List<CriticalValues> findByKey(String key);
 }
