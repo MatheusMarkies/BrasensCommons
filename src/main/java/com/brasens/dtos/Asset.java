@@ -128,6 +128,10 @@ public class Asset {
 	@Type( type = "alertlevel")
 	private AlertLevel level;
 
+	@OneToMany(targetEntity = Alert.class, mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<Alert> alerts = new ArrayList<>();
+
 	@OneToMany(targetEntity = CriticalValues.class, mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<CriticalValues> criticalValues = new ArrayList<>();
