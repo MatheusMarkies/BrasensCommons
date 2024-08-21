@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AssetRepository extends JpaRepository<Asset, UUID> {
 
-    List<Asset> findByName(String name);
+    Optional<Asset> findByName(String name);
     Optional<Asset> findByKey(String key);
 
 }
