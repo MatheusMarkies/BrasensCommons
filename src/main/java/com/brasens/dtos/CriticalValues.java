@@ -1,9 +1,6 @@
 package com.brasens.dtos;
 
-import com.brasens.dtos.enums.AlertLevel;
-import com.brasens.dtos.enums.AlertState;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.hypersistence.utils.hibernate.type.basic.PostgreSQLEnumType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,9 +13,9 @@ import javax.persistence.Table;
 import java.util.UUID;
 
 @Entity
-@Table(name="Alert_Target")
+@Table(name="Critical_Values")
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
-public class AlertTarget {
+public class CriticalValues {
     @Id
     @GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
     @GeneratedValue(generator = "UUIDGenerator")

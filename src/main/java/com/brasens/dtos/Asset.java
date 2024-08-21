@@ -128,9 +128,9 @@ public class Asset {
 	@Type( type = "alertlevel")
 	private AlertLevel level;
 
-	@OneToMany(targetEntity = AlertTarget.class, mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@OneToMany(targetEntity = CriticalValues.class, mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	@JsonIgnore
-	private List<AlertTarget> alertTargets = new ArrayList<>();
+	private List<CriticalValues> criticalValues = new ArrayList<>();
 
 	@ManyToOne
 	@JoinColumn(name = "asset_tree_id")
