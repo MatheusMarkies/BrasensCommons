@@ -14,6 +14,7 @@ import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Entity
@@ -117,19 +118,40 @@ public class CriticalValues {
                 .orElse(Double.NaN);
     }
 
-
     private double fetchWaveformValue(ValueAxis axis, ValueMetric metric) {
+        ReadingType targetType;
         switch (axis) {
             case X:
-                return fetchWaveformMetric(asset.getSensorReading_X().getStatisticalValues(), metric);
+                targetType = ReadingType.ACCEL_X;
+                break;
             case Y:
-                return fetchWaveformMetric(asset.getSensorReading_Y().getStatisticalValues(), metric);
+                targetType = ReadingType.ACCEL_Y;
+                break;
             case Z:
-                return fetchWaveformMetric(asset.getSensorReading_Z().getStatisticalValues(), metric);
+                targetType = ReadingType.ACCEL_Z;
+                break;
             default:
                 throw new IllegalArgumentException("Eixo desconhecido: " + axis);
         }
+
+        // procura o VibrationSensorReading correspondente
+        Optional<VibrationSensorReading> readingOpt = asset.getSensorReading().stream()
+                .filter(r -> r.getReadingType() == targetType)
+                .findFirst();
+
+        if (readingOpt.isEmpty()) {
+            // não encontrou reading do tipo esperado -> retornar 0 ou lançar erro conforme necessidade
+            return 0d;
+        }
+
+        VibrationSensorReading reading = readingOpt.get();
+        if (reading.getStatisticalValues() == null) {
+            return 0d;
+        }
+
+        return fetchWaveformMetric(reading.getStatisticalValues(), metric);
     }
+
 
     private double fetchFFTMetric(FFTStatisticalValues fftValues, ValueMetric metric) {
         switch (metric) {
