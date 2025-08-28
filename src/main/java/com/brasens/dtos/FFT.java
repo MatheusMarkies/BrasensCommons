@@ -60,6 +60,10 @@ public class FFT {
     @JsonIgnore
     private Envelope envelope;
 
+    @Column(name = "fft_type")
+    @Enumerated(EnumType.STRING)
+    private FFTType fftType;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "asset_id")
     @JsonIgnore

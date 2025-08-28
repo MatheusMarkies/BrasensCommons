@@ -83,29 +83,9 @@ public class Asset {
 	@JsonIgnore
 	private List<Data> dataList = new ArrayList<>();
 
-	@OneToOne(mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	@JsonIgnore
-	private FFT fftAcceleration_X;
-
-	@OneToOne(mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY)
-	@JsonIgnore
-	private FFT fftAcceleration_Y;
-
-	@OneToOne(mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY)
-	@JsonIgnore
-	private FFT fftAcceleration_Z;
-
-	@OneToOne(mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY)
-	@JsonIgnore
-	private FFT fftSpeed_X;
-
-	@OneToOne(mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY)
-	@JsonIgnore
-	private FFT fftSpeed_Y;
-
-	@OneToOne(mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY)
-	@JsonIgnore
-	private FFT fftSpeed_Z;
+	private List<FFT> ffts = new ArrayList<>();
 
 	@OneToOne(mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY)
 	@JsonIgnore
