@@ -12,36 +12,6 @@ import javax.persistence.Table;
 
 import java.util.UUID;
 
-// Novos Enums para a refatoração
-enum ValueTag {
-    ACCELERATION,
-    TEMPERATURE,
-    FFT,
-    WAVEFORM,
-    RPM
-}
-
-enum ValueAxis {
-    X,
-    Y,
-    Z,
-    VECTOR,
-    NONE
-}
-
-enum ValueMetric {
-    RMS,
-    MEAN,
-    PEAK_TO_PEAK,
-    SKEWNESS,
-    KURTOSIS,
-    STANDARD_DEVIATION,
-    VARIANCE,
-    CREST_FACTOR,
-    K_FACTOR,
-    NONE
-}
-
 @Entity
 @Table(name="Critical_Values")
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor

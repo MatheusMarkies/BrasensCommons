@@ -40,5 +40,5 @@ public class Alert {
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JoinColumn(name = "asset_id", nullable = false)
     @JsonIgnore
-    private Asset asset;
+    private AssetSummaryDTO asset;
 }

@@ -22,7 +22,7 @@ public interface AssetRepository extends JpaRepository<Asset, UUID> {
             "LEFT JOIN a.bearing b " +
             "LEFT JOIN a.downtime dt " +
             "WHERE a.name = ?1")
-    Optional<AssetSummaryDTO> findByName(String name);
+    Optional<AssetSummaryDTO> findAssetSummaryDTOByName(String name);
 
     @Query("SELECT new com.brasens.dtos.summary.AssetDTO(" +
             "a.id, a.name, a.key, a.rpm, a.location, a.isRigidBase, a.type, a.power, a.pasNumber, " +
@@ -33,9 +33,12 @@ public interface AssetRepository extends JpaRepository<Asset, UUID> {
             "LEFT JOIN a.bearing b " +
             "LEFT JOIN a.downtime dt " +
             "WHERE a.key = ?1")
-    Optional<AssetSummaryDTO> findByKey(String key);
+    Optional<AssetSummaryDTO> findAssetSummaryDTOByKey(String key);
     @Query("SELECT new com.brasens.dtos.summary.AssetSummaryDTO(" +
             "a.id, a.name, a.key, a.location, a.rpm, a.type, l.location, a.level) " +
             "FROM Asset a JOIN a.locationTree l")
     List<AssetSummaryDTO> findAllAssetSummaries();
+
+    Optional<Asset> findByName(String name);
+    Optional<Asset> findByKey(String key);
 }
