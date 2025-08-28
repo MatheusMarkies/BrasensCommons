@@ -1,7 +1,7 @@
 package com.brasens.dtos.enums;
 
 public enum AlertLevel {
-    NORMAl("Normal"),
+    NORMAL("Normal"),
     ALERT("Em Alerta"),
     CRITICAL("Critico");
 
@@ -18,7 +18,7 @@ public enum AlertLevel {
     public static AlertLevel getAlertLevel(String level) {
         switch (level) {
             case "Normal":
-                return AlertLevel.NORMAl;
+                return AlertLevel.NORMAL;
             case "Em Alerta":
                 return AlertLevel.ALERT;
             case "Critico":

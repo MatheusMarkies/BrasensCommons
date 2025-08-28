@@ -6,11 +6,41 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.*;
-
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
 import java.util.UUID;
+
+// Novos Enums para a refatoração
+enum ValueTag {
+    ACCELERATION,
+    TEMPERATURE,
+    FFT,
+    WAVEFORM,
+    RPM
+}
+
+enum ValueAxis {
+    X,
+    Y,
+    Z,
+    VECTOR,
+    NONE
+}
+
+enum ValueMetric {
+    RMS,
+    MEAN,
+    PEAK_TO_PEAK,
+    SKEWNESS,
+    KURTOSIS,
+    STANDARD_DEVIATION,
+    VARIANCE,
+    CREST_FACTOR,
+    K_FACTOR,
+    NONE
+}
 
 @Entity
 @Table(name="Critical_Values")
@@ -28,8 +58,17 @@ public class CriticalValues {
     @Column(name = "alert_critical_value")
     private double criticalValue;
 
-    @Column(name = "alert_tags")
-    private String tags;
+    @Column(name = "value_tag")
+    @Enumerated(EnumType.STRING)
+    private ValueTag tag;
+
+    @Column(name = "value_axis")
+    @Enumerated(EnumType.STRING)
+    private ValueAxis axis;
+
+    @Column(name = "value_metric")
+    @Enumerated(EnumType.STRING)
+    private ValueMetric metric;
 
     @Column(name = "asset_key")
     private String key;
@@ -41,112 +80,105 @@ public class CriticalValues {
     private Asset asset;
 
     public double getTargetValue() {
-        String[] parts = tags.split(" ");
-        String tag = parts[0];
-        String axis = parts.length > 1 ? parts[1] : null;
-        String metric = parts.length > 2 ? parts[2] : null;
-
-        return fetchValueFromAsset(tag, axis, metric);
-    }
-
-    private double fetchValueFromAsset(String tag, String axis, String metric) {
-        switch (tag) {
-            case "Aceleração":
-                return fetchAccelerationValue(axis);
-            case "Temperatura":
-                return 0;//asset.getTemperature();
-            case "RPM":
+        switch (this.tag) {
+            case ACCELERATION:
+                return fetchAccelerationValue(this.axis);
+            case TEMPERATURE:
+                // TODO: Implementar a busca da temperatura do Asset.
+                return 0;
+            case RPM:
                 return asset.getRpm();
-            case "Frequência":
-                return 0;//asset.getNaturalFrequency(axis);
-            case "FFT":
-                return fetchFFTValue(axis, metric);
-            case "Forma de Onda":
-                return fetchWaveformValue(axis, metric);
+            case FFT:
+                return fetchFFTValue(this.axis, this.metric);
+            case WAVEFORM:
+                return fetchWaveformValue(this.axis, this.metric);
             default:
-                throw new IllegalArgumentException("Tag desconhecida: " + tag);
+                throw new IllegalArgumentException("Tag desconhecida: " + this.tag);
         }
     }
 
-    private double fetchAccelerationValue(String axis) {
+    private double fetchAccelerationValue(ValueAxis axis) {
         switch (axis) {
-            case "X":
-                return 0;//asset.getRMSAccelerationX();
-            case "Y":
-                return 0;//asset.getRMSAccelerationY();
-            case "Z":
-                return 0;//asset.getRMSAccelerationZ();
+            case X:
+                // TODO: Implementar a busca do RMS de aceleração X do Asset.
+                return 0;
+            case Y:
+                // TODO: Implementar a busca do RMS de aceleração Y do Asset.
+                return 0;
+            case Z:
+                // TODO: Implementar a busca do RMS de aceleração Z do Asset.
+                return 0;
             default:
                 throw new IllegalArgumentException("Eixo desconhecido: " + axis);
         }
     }
 
-    private double fetchFFTValue(String axis, String metric) {
+    private double fetchFFTValue(ValueAxis axis, ValueMetric metric) {
         switch (axis) {
-            case "X":
+            case X:
                 return fetchFFTMetric(asset.getFftAcceleration_X().getStatisticalValues(), metric);
-            case "Y":
+            case Y:
                 return fetchFFTMetric(asset.getFftAcceleration_Y().getStatisticalValues(), metric);
-            case "Z":
+            case Z:
                 return fetchFFTMetric(asset.getFftAcceleration_Z().getStatisticalValues(), metric);
             default:
                 throw new IllegalArgumentException("Eixo desconhecido: " + axis);
         }
     }
 
-    private double fetchWaveformValue(String axis, String metric) {
+    private double fetchWaveformValue(ValueAxis axis, ValueMetric metric) {
         switch (axis) {
-            case "X":
+            case X:
                 return fetchWaveformMetric(asset.getSensorReading_X().getStatisticalValues(), metric);
-            case "Y":
+            case Y:
                 return fetchWaveformMetric(asset.getSensorReading_Y().getStatisticalValues(), metric);
-            case "Z":
+            case Z:
                 return fetchWaveformMetric(asset.getSensorReading_Z().getStatisticalValues(), metric);
             default:
                 throw new IllegalArgumentException("Eixo desconhecido: " + axis);
         }
     }
 
-    private double fetchFFTMetric(FFTStatisticalValues fftValues, String metric) {
+    private double fetchFFTMetric(FFTStatisticalValues fftValues, ValueMetric metric) {
         switch (metric) {
-            case "RMS":
+            case RMS:
                 return fftValues.getRms();
-            case "Média":
+            case MEAN:
                 return fftValues.getMean();
-            case "Padrão":
+            case STANDARD_DEVIATION:
                 return fftValues.getStandardDeviation();
-            case "Variância":
+            case VARIANCE:
                 return fftValues.getVariance();
-            case "Pico a Pico":
+            case PEAK_TO_PEAK:
                 return fftValues.getPeakToPeak();
-            case "Skewness":
+            case SKEWNESS:
                 return fftValues.getSkewness();
-            case "Curticose":
+            case KURTOSIS:
                 return fftValues.getKurtosis();
             default:
                 throw new IllegalArgumentException("Métrica desconhecida: " + metric);
         }
     }
 
-    private double fetchWaveformMetric(VibrationSensorReadingStatisticalValues waveformValues, String metric) {
+    private double fetchWaveformMetric(VibrationSensorReadingStatisticalValues waveformValues, ValueMetric metric) {
         switch (metric) {
-            case "Fator de Crista":
+            case CREST_FACTOR:
                 return waveformValues.getCrestFactor();
-            case "Fator K":
+            case K_FACTOR:
                 return waveformValues.getKFactor();
-            case "RMS":
+            case RMS:
                 return waveformValues.getRms();
-            case "Média":
+            case MEAN:
                 return waveformValues.getMean();
-            case "Padrão":
+            case STANDARD_DEVIATION:
                 return waveformValues.getStandardDeviation();
-            case "Variância":
+            case VARIANCE:
                 return waveformValues.getVariance();
-            case "Pico a Pico":
+            case PEAK_TO_PEAK:
                 return waveformValues.getPeakToPeak();
-            case "Skewness":
+            case SKEWNESS:
                 return waveformValues.getSkewness();
-            case "Curticose":
+            case KURTOSIS:
                 return waveformValues.getKurtosis();
             default:
                 throw new IllegalArgumentException("Métrica desconhecida: " + metric);

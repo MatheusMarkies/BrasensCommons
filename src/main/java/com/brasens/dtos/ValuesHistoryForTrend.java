@@ -11,7 +11,7 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "History")
+@Table(name = "ValuesHistoryForTrend")
 @Getter
 @Setter
 @AllArgsConstructor
