@@ -84,17 +84,35 @@ public class CriticalValues {
     }
 
     private double fetchFFTValue(ValueAxis axis, ValueMetric metric) {
+        FFTType wantedType;
         switch (axis) {
             case X:
-                return fetchFFTMetric(asset.getFftAcceleration_X().getStatisticalValues(), metric);
+                wantedType = FFTType.ACCEL_X;
+                break;
             case Y:
-                return fetchFFTMetric(asset.getFftAcceleration_Y().getStatisticalValues(), metric);
+                wantedType = FFTType.ACCEL_Y;
+                break;
             case Z:
-                return fetchFFTMetric(asset.getFftAcceleration_Z().getStatisticalValues(), metric);
+                wantedType = FFTType.ACCEL_Z;
+                break;
             default:
                 throw new IllegalArgumentException("Eixo desconhecido: " + axis);
         }
+
+        if (asset == null || asset.getFfts() == null) {
+            return Double.NaN;
+        }
+
+        return asset.getFfts().stream()
+                .filter(f -> f.getFftType() == wantedType)
+                .findFirst()
+                .map(f -> {
+                    FFTStatisticalValues stats = f.getStatisticalValues();
+                    return (stats != null) ? fetchFFTMetric(stats, metric) : Double.NaN;
+                })
+                .orElse(Double.NaN);
     }
+
 
     private double fetchWaveformValue(ValueAxis axis, ValueMetric metric) {
         switch (axis) {
