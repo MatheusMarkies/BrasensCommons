@@ -2,6 +2,7 @@ package com.brasens.dtos;
 
 import com.brasens.dtos.enums.AlertLevel;
 import com.brasens.dtos.enums.AssetState;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class AssetSummaryDTO {
     private UUID id;
     private String name;
@@ -25,8 +27,10 @@ public class AssetSummaryDTO {
     private ZonedDateTime lastCommunication;
     private ZonedDateTime added;
     private AlertLevel level;
-    private String locationTreeName; // Nome da localização da árvore
-    private String organizationName; // Nome da organização
-    private String bearingName; // Identificador do rolamento
-    private AssetState assetState; // Estado do ativo
+
+    // These names must match the constructor parameters
+    private String locationTreeName;
+    private String organizationName;
+    private String bearingName;
+    private AssetState assetState;
 }
