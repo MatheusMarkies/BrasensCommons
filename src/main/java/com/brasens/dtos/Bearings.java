@@ -28,7 +28,7 @@ public class Bearings {
     String Brand;
 
     @Column(name = "identifier")
-    String Identifier;
+    String identifier;
 
     @Column(name = "element_amount")
     int ElementAmount;
