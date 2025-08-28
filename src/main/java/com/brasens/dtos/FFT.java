@@ -64,7 +64,7 @@ public class FFT {
     @Enumerated(EnumType.STRING)
     private FFTType fftType;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "asset_id")
     @JsonIgnore
     private Asset asset;
