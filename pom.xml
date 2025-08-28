@@ -4,7 +4,7 @@
 
   <groupId>com.brasens</groupId>
   <artifactId>BrasensCommons</artifactId>
-  <version>2.4.81</version>
+  <version>2.4.82</version>
   <packaging>jar</packaging>
 
   <name>BrasensCommons</name>
