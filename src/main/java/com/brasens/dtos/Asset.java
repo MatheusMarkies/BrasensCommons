@@ -91,17 +91,9 @@ public class Asset {
 	@JsonIgnore
 	private Downtime downtime;
 
-	@OneToOne(mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	@JsonIgnore
-	private VibrationSensorReading sensorReading_X;
-
-	@OneToOne(mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY)
-	@JsonIgnore
-	private VibrationSensorReading sensorReading_Y;
-
-	@OneToOne(mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY)
-	@JsonIgnore
-	private VibrationSensorReading sensorReading_Z;
+	private List<VibrationSensorReading> sensorReading = new ArrayList<>();
 
 	@Column(name = "alert_level")
 	@Enumerated(EnumType.STRING)

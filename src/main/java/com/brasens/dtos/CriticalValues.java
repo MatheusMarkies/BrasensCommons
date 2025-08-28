@@ -1,6 +1,6 @@
 package com.brasens.dtos;
 
-import com.brasens.dtos.enums.FFTType;
+import com.brasens.dtos.enums.ReadingType;
 import com.brasens.dtos.enums.ValueAxis;
 import com.brasens.dtos.enums.ValueMetric;
 import com.brasens.dtos.enums.ValueTag;
@@ -88,16 +88,16 @@ public class CriticalValues {
     }
 
     private double fetchFFTValue(ValueAxis axis, ValueMetric metric) {
-        FFTType wantedType;
+        ReadingType wantedType;
         switch (axis) {
             case X:
-                wantedType = FFTType.ACCEL_X;
+                wantedType = ReadingType.ACCEL_X;
                 break;
             case Y:
-                wantedType = FFTType.ACCEL_Y;
+                wantedType = ReadingType.ACCEL_Y;
                 break;
             case Z:
-                wantedType = FFTType.ACCEL_Z;
+                wantedType = ReadingType.ACCEL_Z;
                 break;
             default:
                 throw new IllegalArgumentException("Eixo desconhecido: " + axis);
@@ -108,7 +108,7 @@ public class CriticalValues {
         }
 
         return asset.getFfts().stream()
-                .filter(f -> f.getFftType() == wantedType)
+                .filter(f -> f.getReadingType() == wantedType)
                 .findFirst()
                 .map(f -> {
                     FFTStatisticalValues stats = f.getStatisticalValues();

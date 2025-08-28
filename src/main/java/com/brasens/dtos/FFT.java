@@ -1,6 +1,6 @@
 package com.brasens.dtos;
 
-import com.brasens.dtos.enums.FFTType;
+import com.brasens.dtos.enums.ReadingType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -61,7 +61,7 @@ public class FFT {
 
     @Column(name = "fft_type")
     @Enumerated(EnumType.STRING)
-    private FFTType fftType;
+    private ReadingType readingType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "asset_id")

@@ -1,5 +1,6 @@
 package com.brasens.dtos;
 
+import com.brasens.dtos.enums.ReadingType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.hypersistence.utils.hibernate.type.array.DoubleArrayType;
@@ -8,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
@@ -58,7 +58,11 @@ public class VibrationSensorReading {
     @JsonIgnore
     private Distribution distribution = new Distribution();
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @Column(name = "reading_type")
+    @Enumerated(EnumType.STRING)
+    private ReadingType readingType;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "asset_id")
     @JsonIgnore
     private Asset asset;
