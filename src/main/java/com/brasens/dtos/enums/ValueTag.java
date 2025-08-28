@@ -1,4 +1,4 @@
-package com.brasens.dtos;
+package com.brasens.dtos.enums;
 
 // Novos Enums para a refatoração
 public enum ValueTag {

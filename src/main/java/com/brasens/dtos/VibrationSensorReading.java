@@ -2,12 +2,14 @@ package com.brasens.dtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.hypersistence.utils.hibernate.type.array.DoubleArrayType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
@@ -17,6 +19,10 @@ import java.util.UUID;
 
 import static com.brasens.Commons.DEFAULT_TIMEZONE;
 
+@TypeDef(
+        name = "double-array",
+        typeClass = DoubleArrayType.class
+)
 @Entity
 @Table(name = "Vibration_Sensor_Reading")
 @Getter
@@ -32,13 +38,10 @@ public class VibrationSensorReading {
     @JsonIgnore
     private UUID id;
 
-    @Column(name = "temporal_array", columnDefinition = "double precision[]")
-    @Type(type = "list-array")
-    private List<Double> temporalValues = new ArrayList<>();
-
-    @Column(name = "data_array", columnDefinition = "double precision[]")
-    @Type(type = "list-array")
-    private List<Double> data = new ArrayList<>();
+    @OneToMany(targetEntity = Vector.class, cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "values_id")
+    @JsonIgnore
+    private List<Vector> values = new ArrayList<>();
 
     @Column(name = "asset_key")
     private String key;

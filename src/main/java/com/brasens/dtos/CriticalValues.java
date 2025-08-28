@@ -1,5 +1,9 @@
 package com.brasens.dtos;
 
+import com.brasens.dtos.enums.FFTType;
+import com.brasens.dtos.enums.ValueAxis;
+import com.brasens.dtos.enums.ValueMetric;
+import com.brasens.dtos.enums.ValueTag;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

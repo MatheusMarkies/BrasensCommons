@@ -1,4 +1,4 @@
-package com.brasens.dtos;
+package com.brasens.dtos.enums;
 
 public enum ValueAxis {
     X,
